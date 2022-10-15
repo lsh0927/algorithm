@@ -1,27 +1,47 @@
+import java.util.*;
+
 class Solution {
-    public int[] solution(int n) {
-        ArrayList<Integer> answer = new ArrayList<Integer>();
-        ArrayList<Integer> nn = new ArrayList<Integer>(); 
-        
-       for(int a=1;a<n;a++)
-       {
-           while(n>0)
-           {
-               for(int b=1;b<a-1;b++)
-               {
-                   if(a%b!=0)
-               {
-                   nn.add(b);
-               }
-               n--;
-               }
-           }
-       }        
-       for(int i=0;i<b.length;i++)
-       {  
-           if(n%b[i])
-               answer.add(i,b[i]);           
-       }
-        return answer;
+    public Boolean isPrime(int x){
+        int i;
+        int count=0;
+        for(i=1;i<=x;i++)
+        {
+            if(x%i==0)
+                count++;      
+        }
+         if(count==2)
+             return true;
+         else
+             return false;
     }
+    public int[] solution(int n) {
+       
+        List<Integer> list = new ArrayList<>();
+        
+        int i;
+        
+        for(i=1;i<=n;i++)
+        {
+            if(isPrime(i)==true)
+            {
+                if(n%i==0)
+                {
+                   list.add(i);
+                }
+            }
+        }
+    
+        int[] arr1 = new int[list.size()];
+        
+         for (int a = 0 ; a < list.size() ; a++)
+             {
+                 arr1[a] = list.get(a).intValue();
+             }
+       
+       
+         return arr1;
+    }
+    
 }
+
+
