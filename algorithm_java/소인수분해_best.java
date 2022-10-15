@@ -13,5 +13,6 @@ class Solution {
         }
         int[] answer = factorList.stream().mapToInt(i -> i).toArray();
         return answer;
+ 
     }
 }
