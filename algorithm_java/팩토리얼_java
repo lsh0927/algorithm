@@ -1,0 +1,31 @@
+import java.util.*;
+class Solution {    
+    int answer = 0;
+    
+     public int fact(int x){
+        
+       if(x==1 || x==0)
+       {
+           return 1;
+       }
+       else
+       {
+           return(x*fact(x-1));
+       }
+       
+    }
+     public int solution(int n) {
+       
+        while(fact(answer+1)<=n)
+        {
+          
+                answer++;
+            
+        }
+         return answer;
+         
+         
+    }
+        
+
+    }
