@@ -1,6 +1,6 @@
-public class Solution {
-    public int solution(int balls, int share) {
-        int answer = 0;
+class Solution {
+    public long solution(int balls, int share) {
+        long  answer = 0;
         
         if((balls-share)==0)
             return 1;
@@ -12,7 +12,7 @@ public class Solution {
     }
     
     
-    public int fact(int x){
+    public  long fact(int x){
         
        if(x==1 || x==0)
        {
@@ -20,9 +20,8 @@ public class Solution {
        }
        else
        {
-           return(x*fact(x-1));
+           return long (x*fact(x-1));
        }
     
 }
 }
-
