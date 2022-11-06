@@ -1,0 +1,107 @@
+package web;
+
+import java.net.*;
+import java.util.Scanner;
+import java.io.*;
+
+public class TCPClient {
+	Socket sock;
+	OutputStream sendStream;
+	InputStream recvStream;
+	
+	String request;
+	String response;
+	
+	TCPClient(String server, int port) throws IOException, UnknownHostException
+	{
+		sock= new Socket(server,port);
+		sendStream=sock.getOutputStream();
+		recvStream=sock.getInputStream();
+	}
+	void makeRequest()
+	{
+		System.out.print("Enter a string: ");
+		Scanner scanner=new Scanner(System.in);
+		String InString=scanner.nextLine();
+		System.out.println("String read from console is: \n"+ InString);
+		request=InString;
+		scanner.close();
+	}
+	void sendRequest()
+	{
+		try
+		{
+			byte [] sendBuff= new byte [request.length()];
+			sendBuff=request.getBytes();
+			sendStream.write(sendBuff,0,sendBuff.length);
+			
+		}
+		catch(IOException ex)
+		{
+			System.err.println("IOException in sendRequest");
+		}
+		
+	}
+	
+	void getResponse()
+	{
+		try
+		{
+			int dataSize;
+			while((dataSize=recvStream.available())==0);
+			byte[] recvBuff=new byte [dataSize];
+			recvStream.read(recvBuff,0,dataSize);
+			response=new String (recvBuff,0,dataSize);
+		}
+		catch(IOException ex)
+		{
+			System.err.println("IOException in getResponse");
+		}
+	}
+	
+	void useResponse()
+	{
+		System.out.println("String received from server is : \n" +response);
+	}
+	
+	void close()
+	{
+		try
+		{
+			sendStream.close();
+			recvStream.close();
+			sock.close();
+			
+		}
+		catch(IOException ex)
+		{
+			System.err.println("IOException in close");
+		}
+	}
+
+	
+	public static void main(String[] args) throws IOException
+	{
+		final int servPort=7777;
+		final String servName="localhost";
+		TCPClient client= new TCPClient(servName,servPort);
+		client.makeRequest();
+		client.sendRequest();
+		client.getResponse();
+		client.useResponse();
+		client.close(); 
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
