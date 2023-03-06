@@ -10,7 +10,7 @@ class Solution {
             double remain = (100 - progresses[i]) / (double) speeds[i];  //남은 기간 저장
             int date = (int) Math.ceil(remain);  //반올림해주는 Math.ceil()함수
 
-            if (!q.isEmpty() && q.peek() < date) {  //큐가비어있거나&&첫번째 값이 date보다 작다면
+            if (!q.isEmpty() && q.peek() < date) {  //큐가 비어있지않고 그 첫번째 값이 date보다 작다면
                 answerList.add(q.size()); //큐의 크기(원소의 개수)를 answerlist에 넣고
                 q.clear(); //큐를 비움
             }
@@ -23,7 +23,7 @@ class Solution {
         int[] answer = new int[answerList.size()];
 
         for (int i = 0; i < answer.length; i++) {
-            answer[i] = answerList.get(i);
+            answer[i] = answerList.get(i); //정답배열을 만들어 그 값을 대입
         }
 
         return answer;

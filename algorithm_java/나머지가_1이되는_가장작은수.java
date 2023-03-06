@@ -8,6 +8,4 @@ public class Solution {
         
         return count;
     }
-} 나머지가_1이되는_가장작은수 {
-    
-}
+} 
