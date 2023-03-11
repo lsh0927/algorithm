@@ -18,3 +18,13 @@ class Solution {
         //원래 였으면 배열로 split해서 접근했을텐데, 버퍼를 이용한다는 걸 알고나니 더 편한 느낌
     }
 }
+// class Solution { 다른 사람의 풀이
+//     public String solution(String phone_number) {
+//        char[] ch = phone_number.toCharArray();
+//        for(int i = 0; i < ch.length - 4; i ++){
+//            ch[i] = '*';
+//        }
+//        return String.valueOf(ch);
+//     }
+//   }
+  
