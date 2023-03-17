@@ -13,7 +13,7 @@ class Solution {
     
     public int devide(int k)
     {
-        while(k>3^)
+        while(k>3)
     }
     
 }
