@@ -13,3 +13,22 @@ class Solution {
         return answer;
     }
 }
+/*
+ class Solution {
+
+    long[] dp = new long[2001];
+
+    public long solution(int n) {
+        if(n==1) return 1;
+        if(n==2) return 2;
+
+        if(dp[n]!=0) return dp[n];
+
+        long result = (solution(n-2) + solution(n-1)) % 1234567;
+        dp[n] = result;
+        return result;
+    }
+
+}
+그냥 dp가 답이었다... 뭔가 dp같은데 그래도 다르게 풀어볼 생각하려다가 너무 멀리 온듯하다
+ */
