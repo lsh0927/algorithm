@@ -25,3 +25,53 @@ class Solution {
         return sum;
     }
 }
+/* 정답은 스택을 이용한 풀이.....
+ * import java.util.Stack;
+
+class Solution {
+    boolean iscorr(String s) {
+        Stack<String> st = new Stack<String>();
+        String[] strs = s.split("");
+
+        for(String str : strs) {
+            if(str.equals("(")||str.equals("{")||str.equals("["))
+                st.add(str);
+            else {
+                if(st.empty())
+                    return false;
+
+                String out = st.pop();
+                if(str.equals(")")) {
+                    if(!out.equals("("))
+                        return false;
+                }
+                if(str.equals("}")) {
+                    if(!out.equals("{"))
+                        return false;
+                }
+                if(str.equals("]")) {
+                    if(!out.equals("["))
+                        return false;
+                }
+            }
+        }
+
+        if(st.empty())
+            return true;
+        else
+            return false;
+    }
+
+    public int solution(String s) {
+        int answer = 0;
+
+        for(int i = 0 ; i < s.length() ; ++i) {
+            if(iscorr(s.substring(i) + s.substring(0, i)))
+                answer++;
+        }
+
+
+        return answer;
+    }
+}
+ */
