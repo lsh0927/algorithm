@@ -25,7 +25,7 @@ class Solution {
             }else{
                 que.add(i);
                 l--;
-                if(l<0)
+                if(l<0)//22222
                     l=que.size()-1;
             }
         }
