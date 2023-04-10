@@ -18,7 +18,7 @@ class Solution {
             if (part.equals("")) { // 입력된 문자열이 빈 문자열인 경우
                 continue; // 다음 문자열로 이동
             }
-            int num = Integer.parseInt(part);
+            Long num = Long.parseLong(part);
             if (num <= 1) { // 음수와 1은 소수가 아님
                 continue;
             }
@@ -46,7 +46,7 @@ class Solution {
         return sb.reverse().toString();
     }
 
-    private static boolean isPrime(int n) {
+    private static boolean isPrime(Long n) {
         for (int i = 2; i <= Math.sqrt(n); i++) {
             if (n % i == 0) {
                 return false;
@@ -55,3 +55,5 @@ class Solution {
         return true;
     }
 }
+//Integer.parseInt(s) -> Long.parseLong(s)로 변경, int num을 Long num으로 변경
+//왜 int->long으로 바꾸면 런타임 에러가 나지 않을까...?
