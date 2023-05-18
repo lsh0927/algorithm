@@ -1,3 +1,4 @@
+/*
 class Solution {
     int a;
     public int[] solution(int[] numbers) {
@@ -28,6 +29,9 @@ class Solution {
         return -1;
     }
 }
+
+*/
+
 //2번째-> 함수 구분 없이 한번에 작성, but 같은 구간에서 시간 초과
 /*
  * class Solution {
@@ -85,3 +89,28 @@ class Solution {
     }
 }
  */
+//최종 정답: 스택을 이용한 풀이...
+import java.util.*;
+
+class Solution {
+    public int[] solution(int[] numbers) {
+        int[] answer = new int[numbers.length];
+        Arrays.fill(answer, -1);
+        Stack<Integer> s = new Stack<>();
+        s.push(0);
+        for(int i = 1; i < numbers.length; i++){
+            while(!s.isEmpty()){
+                int idx = s.pop();
+                if(numbers[i] > numbers[idx]){ // 뒤가 더 클때
+                    answer[idx] = numbers[i];
+                } else { // 앞이 더 크거나 같을 때
+                    s.push(idx);
+                    break;
+                } 
+            }
+            s.push(i);
+        }
+
+        return answer;
+    }
+}
