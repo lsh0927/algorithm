@@ -183,3 +183,68 @@ class Solution {
   */
 
   //모 이런 풀이도 있다...
+
+  /*
+   * class Solution {
+  public int solution(int m, int n, String[] board) {
+      int answer = 0;
+      char[][] boardArr = new char[m+2][n+2];
+      int answerbefor = -1;
+                   for(int  i =0; i<m; i++){
+          for(int  j =0; j<n; j++){
+          boardArr[i][j]= board[i].toCharArray()[j];
+         }  
+      }
+
+      while(true){
+          if(answer == answerbefor){
+              break;
+          }
+          answerbefor = answer;
+
+        boolean[][] boardCleaner = new boolean[m+2][n+2];
+              for(int  i =0; i<m; i++){
+          for(int  j =0; j<n; j++){
+              if(boardArr[i][j]==boardArr[i][j+1]&&boardArr[i][j]!=' '){
+                   if(boardArr[i][j]==boardArr[i+1][j+1]){
+                    if(boardArr[i][j]==boardArr[i+1][j]){
+                        boardCleaner[i][j] = true;
+                        boardCleaner[i+1][j] = true;
+                        boardCleaner[i+1][j+1] = true;
+                        boardCleaner[i][j+1] = true;
+                    }
+                    }
+              }
+         }  
+            }
+      for(int  i =0; i<m; i++){
+          for(int  j =0; j<n; j++){
+              if(boardCleaner[i][j]){
+                   boardArr[i][j] = ' ';
+                  answer++;
+                  boardCleaner[i][j] = false;
+              }
+
+         }  
+
+      }
+
+        for(int k = 0; k<m; k++){
+        for(int  i =m; i>0; i--){
+          for(int  j =0; j<n; j++){
+              if(boardArr[i][j]==' '){
+                  // System.out.print("!");
+              boardArr[i][j] = boardArr[i-1][j];
+              boardArr[i-1][j] = ' ';
+              }
+         }  
+         
+      }
+        }
+     
+      }
+
+      return answer;
+  }
+}
+   *///이 풀이가 제일 맞는것 같다
