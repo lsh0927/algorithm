@@ -39,3 +39,26 @@ class Solution {
     }
 }
  */
+/* 
+ class Solution {
+    public String solution(String s, int n) {
+        String answer = "";
+        StringBuilder builder= new StringBuilder();
+        for(char c: s.toCharArray()){
+            builder.append(push(c,n));
+        }
+           return builder.toString();
+    }
+        
+        //문자열 객체를 이용한 풀이
+        private char push(char c, int n){
+            if(!Character.isAlphabetic(c)) return c;
+            
+            int offset= Character.isUpperCase(c) ? 'A' : 'a';
+            int position= c-offset;
+            position= (position+n)%('Z'-'A'+1);
+            return (char)(offset +position);
+        }
+        
+}
+*/
