@@ -225,3 +225,68 @@ public class Main {
     }
 }
  */
+
+
+ /*젤 맘에 드는 풀이
+  * import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+import java.util.*;
+public class Main {
+    static int n,m,r,c,d;
+    static int [][] board;
+    static int count= 1; //시작 시점은 바로 청소하므로
+    static int [] dx={-1,0,1,0}; //북동남서 순, index가 되어 x좌표의 증감이 된다.
+    static int [] dy={0,1,0,-1}; //북동남서 순
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        n= sc.nextInt();
+        m= sc.nextInt();
+        r= sc.nextInt();
+        c=sc.nextInt();
+        d=sc.nextInt();
+
+        board=new int[n][m];
+        for(int i=0; i<n;i++){
+            for(int j=0; j<m;j++){
+                board[i][j]=sc.nextInt();
+            }
+        }
+
+        dfs(r,c,d); //x,y,direction
+        System.out.println(count);
+    }
+    public static void dfs(int x, int y, int dir){
+        board[x][y]=2;
+
+        for(int i=0; i<4;i++){
+            dir-=1;
+            if(dir==-1) dir=3;
+
+            int nx=x+dx[dir];
+            int ny=y+dy[dir];
+            if(nx>=0 && ny>=0 &&nx<n &&ny<m){
+                if(board[nx][ny]==0) //벽도 아니고 청소한 곳도 아니라면? 청소하러 이동
+                { 
+                    count++;
+                    dfs(nx,ny,dir);
+                //일반적인 dfs는 가다가 길이 막히면 다시 되돌아와서 해당 위치부터 계산
+                //이 문제는 후진할 때만 길을 되돌아 가며 확인 할 수 있으므로
+                //리턴을해서 다시 되돌아와도 더이상 움직이면 안됨
+                return;
+                }
+            }
+        }
+
+        //반복문을 빠져나왔다? 주변에 청소할게 없다
+        int d=(dir+2)%4;
+        int bx=x+dx[d]; //후진
+        int by=y+dy[d]; //후진
+        if(bx>=0 &&  by>=0 &&bx<n&&by<m &&board[bx][by]!=1){
+            dfs(bx,by,dir);
+        }
+    }
+}
+  */
