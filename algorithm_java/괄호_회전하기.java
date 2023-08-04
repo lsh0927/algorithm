@@ -75,3 +75,42 @@ class Solution {
     }
 }
  */
+
+
+
+ import java.util.*; 
+class Solution {
+            public int solution(String s) {
+                char[] str=s.toCharArray();
+                int count=0;
+                
+                for(int offset=0;offset<str.length;offset++){
+                    if(isCorrect(str,offset))
+                        count++;
+                }
+                return count;
+            }
+            
+            private boolean isCorrect(char[] str,int offset){
+                Stack<Character> stack= new Stack<>();
+                
+                for(int i=-0; i<str.length;i++)
+                {
+                    //substring()을 안쓰는 이유
+                    //매 검사마다 새로운 문자열 객체와 문자 배열 생성-> 매우 비효율
+                    char c=str[(offset+i)%str.length];
+                    switch (c)
+                    {
+                        case '(' ->stack.push(')');
+                        case '{' -> stack.push('}');
+                        case '[' -> stack.push(']');
+                        case ')','}',']' -> {
+                            if (stack.isEmpty()) return false;
+                            if (stack.pop() != c) return false;
+                        }
+                    }
+                }
+                
+                return stack.isEmpty();
+            }
+        }
