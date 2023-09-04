@@ -79,7 +79,6 @@
 //     }
 // }
 
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -91,65 +90,66 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 import java.util.*;
 
-public class Main {
+ class Solution {
+            static char[][]map;
+            static Node start=null;
+            static int answer=0;
+            static int N,M;
 
-    public static void main(String[] args) throws IOException {
-        class Solution {
 
-            static char[][] map;
-            static Node start = null;
-            static int answer = 0;
-            static int N, M;
+            public  int solution(String[] board) {
+                N= board.length;
+                M=board[0].length();
+                map= new char[N][M];
 
-            public int solution(String[] board) {
-                N = board.length;
-                M = board[0].length();
-                map = new char[N][M];
-                for (int i = 0; i < N; i++) {
-                    for (int j = 0; j < M; j++) {
-                        map[i][j] = board[i].charAt(j);
-                        if (map[i][j] == 'R') {
-                            start = new Node(i, j, 0);
+                for(int i=0;i<N;i++){
+                    for(int j=0;j<M;j++){
+                        map[i][j]=board[i].charAt(j);
+                        if(map[i][j]=='R'){
+                            start= new Node(i,j,0);
                         }
                     }
                 }
                 bfs();
-                return answer == 0 ? -1 : answer;
+                return answer==0 ? -1: answer;
             }
 
-            public void bfs() {
-                boolean[][] visited = new boolean[N][M];
-                Queue<Node> queue = new LinkedList<>();
-                queue.add(start);
-                visited[start.i][start.j] = true;
-                while (!queue.isEmpty()) {
-                    Node cur = queue.poll();
-                    if (map[cur.i][cur.j] == 'G') {
-                        answer = cur.w;
+            public void bfs(){
+                boolean[][]visited= new boolean[N][M];
+                Queue<Node> q= new LinkedList<>();
+                q.add(start);
+                visited[start.i][start.j]=true;
+
+                while (!q.isEmpty()){
+                    Node cur= q.poll();
+                    if(map[cur.i][cur.j]=='G'){
+                        answer=cur.w;
                         break;
                     }
-                    int x = cur.i;
-                    int y = cur.j;
+                    int x= cur.i;
+                    int y= cur.j;
 
-                    // 상
-                    while (map[x][y] != 'D') {
+                    //좌
+                    while (map[x][y]!='D'){
                         x--;
-                        if (x < 0) {
-                            x = 0;
+                        if(x<0){
+                            x=0;
                             break;
                         }
-                        if (map[x][y] == 'D') {
+                        if(map[x][y]=='D'){
                             x++;
                             break;
                         }
-                    }
-                    if (!visited[x][y]) {
-                        visited[x][y] = true;
-                        queue.add(new Node(x, y, cur.w + 1));
-                    }
-                    x = cur.i;
 
-                    // 하
+                    }
+                    //sliding이 끝나고 다시 방향을 결정(노드 생성)
+                    if(!visited[x][y]){
+                        visited[x][y]=true;
+                        q.add(new Node(x,y,cur.w+1));
+                    }
+                    x= cur.i;
+
+                    // 우
                     while (map[x][y] != 'D') {
                         x++;
                         if (x == N) {
@@ -163,11 +163,11 @@ public class Main {
                     }
                     if (!visited[x][y]) {
                         visited[x][y] = true;
-                        queue.add(new Node(x, y, cur.w + 1));
+                        q.add(new Node(x, y, cur.w + 1));
                     }
                     x = cur.i;
 
-                    // 좌
+                    // 하
                     while (map[x][y] != 'D') {
                         y--;
                         if (y < 0) {
@@ -181,11 +181,10 @@ public class Main {
                     }
                     if (!visited[x][y]) {
                         visited[x][y] = true;
-                        queue.add(new Node(x, y, cur.w + 1));
+                        q.add(new Node(x, y, cur.w + 1));
                     }
                     y = cur.j;
-
-                    // 우
+                    // 싱
                     while (true) {
                         y++;
                         if (y == M) {
@@ -199,15 +198,15 @@ public class Main {
                     }
                     if (!visited[x][y]) {
                         visited[x][y] = true;
-                        queue.add(new Node(x, y, cur.w + 1));
+                        q.add(new Node(x, y, cur.w + 1));
                     }
+
+
                 }
             }
 
-            public class Node {
-                int i;
-                int j;
-                int w;
+            public class Node{
+                int i,j,w;
 
                 public Node(int i, int j, int w) {
                     this.i = i;
@@ -217,6 +216,83 @@ public class Main {
             }
         }
 
+
+
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        
+class Solution {
+    static int n, m, sx, sy, ex, ey;
+    static char[][] map;
+    static boolean[][] visit;
+    static int[] dx = {1, -1, 0, 0};
+    static int[] dy = {0, 0, 1, -1};
+
+    public static int bfs(){
+        Queue<int[]> q = new LinkedList<int[]>();
+        visit[sx][sy] = true;
+        q.add(new int[]{sx, sy, 0});
+
+        while(!q.isEmpty()){
+            int[] point = q.poll();
+
+            int x = point[0];
+            int y = point[1];
+            int dist = point[2];
+
+            if(x==ex && y==ey) return dist;
+
+            for(int i=0;i<4;i++){
+                int nextX = x;
+                int nextY = y;
+
+                for(int k=1;k<=Math.max(n, m);k++){
+                    nextX+=dx[i];
+                    nextY+=dy[i];
+
+                    if(nextX<0 || nextX>=n || nextY<0 || nextY>=m || map[nextX][nextY] =='D') {
+                        nextX-=dx[i];
+                        nextY-=dy[i];
+                        break;
+                    }
+                }
+
+                if(visit[nextX][nextY]) continue;
+
+                visit[nextX][nextY] = true;
+                q.add(new int[]{nextX, nextY, dist+1});
+            }
+        }
+
+        return -1;
+    }
+
+    public int solution(String[] board) {
+        n = board.length;
+        m = board[0].length();
+
+        map = new char[n][m];
+        visit = new boolean[n][m];
+
+        for(int i=0;i<n;i++) {
+            map[i] = board[i].toCharArray();
+            for(int j=0;j<m;j++) {
+                if(map[i][j] == 'R'){
+                    sx = i;
+                    sy = j;
+                }
+                else if(map[i][j] == 'G'){
+                    ex = i;
+                    ey = j;
+                }
+            }    
+        }
+
+        return bfs();
+    }
+}
 
     }
 }
