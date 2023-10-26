@@ -1,118 +1,21 @@
-import java.util.*;
-
 class Solution {
-    
-    final char[] WORDS = {'A', 'E', 'I', 'O', 'U'};
-    final int MAX_LENGTH = 5;
-        
-    public int solution(String word) {
-        int answer = 0;
-        
-        List<String> elements = new ArrayList<>();
-        
-        for(int i=0; i<WORDS.length; i++){
-            dfs(elements, String.valueOf(WORDS[i]));
-        }    
-        
-        for(int i=0; i<elements.size(); i++){
-            if(elements.get(i).equals(word)){
-                answer = i + 1;
-                break;
-            }
-        }
-        
-        return answer;
-    }
-    
-    void dfs(List<String> elements, String str){
-        if(str.length() > MAX_LENGTH) return;
-        
-        if(!elements.contains(str)) elements.add(str);
-    
-        for(int i=0; i<WORDS.length; i++){
-            dfs(elements, str+WORDS[i]);
-        }
-    }
-}
+            //상태 (word) : word 로 시작하는 모든 단어
+            // 이 상태는 word 로 시작하는 모든 단어를 반환
+            // 종료조건 (길이가 5인 word) = word
+            // 점화식 (word) = [word] + (word +'A')+(word +'E')+(word +'I')+(word +'O')+(word +'U')
 
-/*
+            private static final char[] CHARS= "AEIOU".toCharArray();
 
-import java.lang.Math;
-
-class Solution {
-    public int solution(String word) {
-        int answer = word.length();
-        int pos;
-        for(pos = 0; pos < word.length(); pos ++){
-            char c = word.charAt(pos);
-            if(c=='A') continue;
-            int temp = 0;
-            for(int i = 0; i <= 4-pos; i++){
-                temp += Math.pow(5,i);
-            }
-            answer += temp*val(c);
-        }
-        return answer;
-    }
-
-    public int val(char c){
-        if(c=='E') return 1;
-        else if(c=='I') return 2;
-        else if(c=='O') return 3;
-        else return 4;
-    }
-}
- */
-
- /*
-  * class Solution {
-    public int solution(String word) {
-        int answer = 0, per = 3905;
-        for(String s : word.split("")) answer += "AEIOU".indexOf(s) * (per /= 5) + 1;
-        return answer;
-    }
-}
-  */
-
-  /*
-   * import java.util.ArrayList;
-import java.util.List;
-public class Solution {
-    private static final char[] CHARS = "AEIOU".toCharArray();
-    private void generate(String word, List<String> words) {
-        words.add(word);
-        if (word.length() == 5) return; for (char c : CHARS) {
-            generate(word + c, words); 
-        }
-    }
-    public int solution(String word) {
-    List<String> words = new ArrayList<>(); 
-    generate("", words);
-    return words.indexOf(word);
-    }
-}
-   */
-
-
-   //다시 돌아온 모음사전
-import java.util.*;
-class Solution {
-            List<String> list = new ArrayList<>();
-            
-            public void dfs(String str, int len) {
-                
-                if(len > 5) 
-                    return;
-                
-                list.add(str);
-                
-            for(int i = 0; i < 5; i++) {
-                    dfs(str + "AEIOU".charAt(i), len + 1);
-                }
-            }
             public int solution(String word) {
-                dfs("", 0);
-                System.out.println(list.indexOf(word));
-                return list.indexOf(word);
+                List<String> words= new ArrayList<>();
+                generate("",words);
+                return words.indexOf(word);
+            }
+            private void generate(String word,List<String> words){
+                words.add(word);
+                if (word.length()==5) return;
+                for (char c: CHARS){
+                    generate(word+c,words);
+                }
             }
         }
