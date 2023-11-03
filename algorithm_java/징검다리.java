@@ -7,6 +7,7 @@ class Solution {
                 Arrays.sort(rocks);
 
                 int start=1;
+                
                 int end=distance+1;
                 while (end-start>1) {
 
