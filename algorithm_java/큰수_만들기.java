@@ -1,15 +1,23 @@
 class Solution {
     public String solution(String number, int k) {
-        StringBuilder builder = new StringBuilder(number);
-        int length = builder.length() - k;
+        
+        Stack<Character> stack= new Stack<>();
 
-        for (int i = 1; i < builder.length() && builder.length() > length; i++) {
-            if (builder.charAt(i) > builder.charAt(i - 1)) {
-                builder.deleteCharAt(i - 1);
-                i = Math.max(0, i - 2);
+        for (Character c : number.toCharArray()) {
+            
+            while (k>0 && !stack.isEmpty() && c>stack.peek()){
+                stack.pop();
+                k--;
             }
+            stack.push(c);
         }
-
-        return builder.substring(0, length);
+        
+        while (k-- >0){
+            stack.pop();
+        }
+        
+        return stack.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining());
     }
 }
