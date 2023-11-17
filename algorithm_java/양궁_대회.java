@@ -1,77 +1,100 @@
-class Solution {
-            public int[] solution(int n, int[] info) {
+import java.util.*;  
+    /*
+           점수는 0~10까지 11개, 중복 조합 계산시 190000이하로 완전탐색이 좋음
+         */
 
-                HashMap<Integer,Integer> hm= new HashMap<>();
-               // int sum=0; int b=0;
-                int score1=0;
-                for(int i=0;i<11;i++){
-                    hm.put(10-i,info[i]);
-//                    sum+=info[n];
-//                    if(sum==n) {
-//                        b=1;
-//                    }
-                    //개수가 n이 되면 break; -> 메모리를 위해?
-                }
-                for (Integer key : hm.keySet()) {
-                    score1 += key;
-                }
-                //이제 라이언의 과녁 개수를 계산해야 함
-                //첫번째: 가장 큰 점수 차로 승리할 것
-                //두번째: 그 경우가 여러 가지 일 경우 가장 낮은 점수를 더 많이 맞힐 것
-                //세번째: 이 점수를 맞힌 개수도 같을 경우, 계속해서 그 다음으로 낮은 점수를 더 많이 맞힌 경우를 리턴
-                //우선 순위 큐를 이용?
-
-                //가장 큰 점수 차로 승리할 방법
-                //
-
-                int[] answer = {};
-
-
-                return answer;
-            }
-        }
-
-
-
-
+        //1. 기준 정하기
         class Solution {
-            static int[] res = { -1 };
-            static int[] lion;
-            static int max = -10000;
-
             public int[] solution(int n, int[] info) {
-                lion = new int[11];
-                dfs(info,1,n);
-                return res;
+                int[] ryan= ryan(0,new int[11],n, info);
+                
+                if (ryan==null)
+                    return new int[] {-1};
+                
+                return ryan;
+                
             }
 
-            public void dfs(int[] info, int cnt, int n) {
-                if(cnt == n+1) {
-                    int apeach_point = 0;
-                    int lion_point = 0;
-                    for(int i = 0; i <= 10; i++)
-                    {
-                        if(info[i] != 0 || lion[i] != 0) {
-                            if(info[i] < lion[i])
-                                lion_point += 10 - i;
-                            else
-                                apeach_point += 10 - i;
-                        }
+            //점수 차를 비교
+            private int scoreDiff(int[] apeach, int[] ryan){
+                int diff=0;
+
+                for (int i=0;i<apeach.length;i++){
+                    if (apeach[i]==0 && ryan[i]==0)
+                        continue;
+
+                    if (apeach[i]>=ryan[i]){
+                        diff-=10-i;
                     }
-                    if(lion_point > apeach_point) {
-                        if(lion_point - apeach_point >= max)
-                        {
-                            res = lion.clone();
-                            max = lion_point - apeach_point;
-                        }
+                    else {
+                        diff+=10-i;
                     }
-                    return ;
                 }
-                for(int j = 0; j <= 10 && lion[j] <= info[j]; j++) {
-                    lion[j]++;
-                    dfs(info, cnt + 1, n);
-                    lion[j]--;
+
+                return diff;
+            }
+            //더 낮은 점수를 더 많이 맞춘 경우 채택
+            // 더 낮은 점수가 들어있는 점수 배열의 뒤쪽부터 순회
+            private boolean isPrior(int[] base, int[] comp){
+                for (int i=10; i>=0;i--){
+                    if (comp[i]==base[i])continue;
+                    return comp[i]>base[i];
                 }
+                return false;
             }
 
+            //2. 완전 탐색
+            //앞서 정의한 두 메서드를 사용하여 가장 우선순위가 높은 경우
+            /*
+            상태 정의와 종료조건, 점화식 정의
+             */
+
+            /*
+            상태: (index,hits,n)
+            배열 hits의 index번째 부터 N개의 화살을 쏠 때
+            가장 우선순위가 높은 과녁 점수 배열
+             */
+
+            /*
+            종료 조건:
+            모든 점수에 대한 화살 개수가 정해지면 종료
+            쏘지 않고 남은 화살이 있다면 무효->null 반환
+            모든 화살을 소모했다면 라이언이 이기는 경우에만 배열 hits 반환
+             */
+
+            /*
+            점화식 정의
+             */
+
+            private int[] ryan(int index, int[] hits, int n, int[] apeach){
+
+                if (index== hits.length){
+                    if (n>0) return null;
+                    if (scoreDiff(apeach,hits )<=0)
+                        return null;
+                    return Arrays.copyOf(hits,hits.length);
+
+                }
+
+                int maxDiff=0;
+                int[] result= null;
+
+
+                for (int hit=0;hit<= n; hit++){
+                    hits[index]=hit;
+                    int[] ryan=ryan(index+1,hits,n-hit, apeach);
+                    if (ryan==null)
+                        continue;
+
+                    int diff= scoreDiff(apeach,ryan);
+                    if (diff>maxDiff || (diff ==maxDiff && isPrior(result,ryan))){
+                        maxDiff=diff;
+                        result=ryan;
+                    }
+                }
+
+                return result;
+            }
         }
+
+
