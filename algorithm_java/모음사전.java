@@ -1,21 +1,22 @@
-class Solution {
-            //상태 (word) : word 로 시작하는 모든 단어
-            // 이 상태는 word 로 시작하는 모든 단어를 반환
-            // 종료조건 (길이가 5인 word) = word
-            // 점화식 (word) = [word] + (word +'A')+(word +'E')+(word +'I')+(word +'O')+(word +'U')
+ class Solution {
 
-            private static final char[] CHARS= "AEIOU".toCharArray();
+            private static final char[] CHARS="AEIOU".toCharArray();
 
             public int solution(String word) {
-                List<String> words= new ArrayList<>();
-                generate("",words);
-                return words.indexOf(word);
+                return  generate("").indexOf(word);
+                //TODO 왜 별다른 인덱스 처리 없이 ""만으로 답을 구할 수 있는가?
             }
-            private void generate(String word,List<String> words){
+
+            private List<String> generate (String word){
+                ArrayList<String> words = new ArrayList<>();
+
                 words.add(word);
-                if (word.length()==5) return;
-                for (char c: CHARS){
-                    generate(word+c,words);
+
+                if (word.length()==5) return words;
+
+                for (char c : CHARS) {
+                    words.addAll(generate(word+c));
                 }
+                return words;
             }
         }
