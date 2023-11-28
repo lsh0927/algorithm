@@ -1,32 +1,46 @@
 import java.util.*;
-
+import java.util.stream.Collectors;
+ 
 class Solution {
-    private boolean isPrime(int n){
-        if(n<=1) return false;
-        for(int i=2; i*i<=n;i++){
-            if(n%i==0) return false;
+            public int solution(String number) {
+                List<Integer> numbers= number.chars()
+                        .map(c->c-'0')
+                        .boxed()
+                        .collect(Collectors.toList());
+                return getPrimes(0,numbers).size();
+            }
+
+            private Set<Integer> getPrimes(int num, List<Integer>numbers){
+                //종료 조건 및 점화식 구현
+                if (numbers.isEmpty()){
+                    //num의 소수 여부에 따라 적절한 집합 반환
+                    if (isPrime(num))
+                        return Set.of(num);
+                    return Set.of();
+                }
+                Set<Integer> primes= new HashSet<>();
+                //점화식 구현
+                if (isPrime(num))
+                    primes.add(num);
+
+                //상태 전이 구현
+                for (int i=0; i<numbers.size();i++)
+                {
+                    //numbers.get(i)로 상태 전이 진행
+                    int nextAcc= num*10+numbers.get(i);
+                    List<Integer> nextNumbers= new ArrayList<>(numbers);
+                    nextNumbers.remove(i);
+
+                    primes.addAll(getPrimes(nextAcc,nextNumbers));
+                }
+                return primes;
+            }
+            private boolean isPrime(int n) {
+                if (n <= 1) return false;
+                for (int i = 2; i * i <= n; i++) {
+                    if (n % i == 0)
+                        return false;
+                }
+                return true;
+            }
         }
-        return true;
-    }
-    private void getPrimes(int acc, int[] numbers, boolean[] isUsed,
-                          Set<Integer> primes){
-        if(isPrime(acc)) primes.add(acc);
-        
-        for(int i=0;i<numbers.length;i++){
-            if(isUsed[i]) continue;
-            int nextAcc= acc*10+numbers[i];
-            
-            isUsed[i]=true;
-            getPrimes(nextAcc,numbers,isUsed,primes);
-            isUsed[i]=false;
-        }
-        
-    }
-    
-    public int solution(String nums) {
-        Set<Integer> primes=new HashSet<>();
-        int[] numbers= nums.chars().map(c->c-'0').toArray();
-        getPrimes(0,numbers,new boolean[numbers.length],primes);
-        return primes.size();
-        }
-}
