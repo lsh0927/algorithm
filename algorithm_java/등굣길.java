@@ -3,6 +3,7 @@ class Solution{
     private final int[][]mem=new int[101][101];
     private int count(int x,int y, int w, int h, boolean[][]isPuddle){
         if(x>w ||y>h) return 0;
+        
         if(isPuddle[y][x]) return 0;
         if(mem[x][y]!=-1) return mem[x][y];
         if(x==w && y==h) return 1;
