@@ -1,60 +1,54 @@
-  class Solution {
+class Solution {
 
-            private static class State{
-                public final String word;
-                public final int step;
+    static class Node {
+        String next;
+        int edge;
 
-                public State(String word, int step) {
-                    this.word = word;
-                    this.step = step;
-                }
-                //상태변수는 word 밖에 없음
-
-            }
-
-
-            public int solution(String begin, String target, String[] words) {
-
-                boolean[] isVisited= new boolean[words.length];
-
-                Queue<State> queue= new LinkedList<>();
-                queue.add(new State(begin,0));
-
-                while (!queue.isEmpty()){
-                    State state= queue.poll();
-
-                    if (state.word.equals(target))
-                        return state.step;
-
-                    for (int i=0;i< words.length;i++){
-                        String next= words[i];
-                        //상태 전이 검사 및 상태 전이
-                        if (!isConvertable(state.word, next))
-                            continue;
-                        if (isVisited[i])
-                            continue;
-
-                        isVisited[i]=true;
-                        queue.add(new State(next, state.step+1));
-                    }
-
-                }
-
-                return 0;
-            }
-
-
-
-            private boolean isConvertable(String src, String dst){
-                char[] srcArr= src.toCharArray();
-                char[] dstArr= dst.toCharArray();
-
-                int diff=0;
-                for (int i=0; i<srcArr.length; i++){
-                    if (srcArr[i] != dstArr[i]) diff++;
-                }
-                return diff==1;
-            }
-
-
+        public Node(String next, int edge) {
+            this.next = next;
+            this.edge = edge;
         }
+    }
+
+    public int solution(String begin, String target, String[] words) {
+        int n = words.length, ans = 0;
+
+        // for (int i=0; i<n; i++)
+        //  if (words[i] != target && i == n-1) return 0;
+
+        Queue<Node> q = new LinkedList<>();
+
+        boolean[] visit = new boolean[n];
+        q.add(new Node(begin, 0));
+
+        while(!q.isEmpty()) {
+            Node cur = q.poll();
+            
+            
+            if (cur.next.equals(target)) {
+                ans = cur.edge;
+                break;
+            }
+
+            for (int i=0; i<n; i++) {
+                if (!visit[i] && isNext(cur.next, words[i])) {
+                    visit[i] = true;
+                    q.add(new Node(words[i], cur.edge + 1));
+                }
+            }
+        }
+
+        return ans;
+    }
+
+    static boolean isNext(String cur, String n) {
+        int cnt = 0;
+        for (int i=0; i<n.length(); i++) {
+            if (cur.charAt(i) != n.charAt(i)) {
+                if (++ cnt > 1) return false;
+            }
+        }
+
+        return true;
+    }    
+}
