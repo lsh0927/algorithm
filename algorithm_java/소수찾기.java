@@ -44,3 +44,72 @@ class Solution {
                 return true;
             }
         }
+        /*
+         * 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.Buffer;
+import java.util.*;
+
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+
+
+
+        class Solution {
+            static String[] arr;
+            static int count=0;
+            static boolean[] check= new boolean[7];
+
+            static List<Integer> arr2= new ArrayList<>();
+
+            public static boolean isPrime(int num){
+                if (num==0)
+                    return false;
+                if (num==1)
+                    return false;
+                for (int i=2;i*i<=num; i++){
+                    if(num%i ==0)
+                        return false;
+                }
+                return true;
+            }
+
+            public int solution(String numbers) {
+                String tmp="";
+
+                for (int i=1; i<=numbers.length();i++)
+                {
+                    makePrime(numbers,tmp,i);
+                }
+                return count;
+            }
+            public static void makePrime(String n, String tmp, int len){
+                if (tmp.length()==len){
+                    if (!arr2.contains(Integer.parseInt(tmp)))
+                    {
+                        arr2.add(Integer.parseInt(tmp));
+                        if (isPrime(Integer.parseInt(tmp)))
+                            count++;
+                    }
+                    return;
+                }
+
+                for (int j=0; j<n.length();j++){
+                    if (check[j]) continue;
+                    tmp+=n.charAt(j);
+
+                    check[j]=true;
+                    makePrime(n,tmp,len);
+                    check[j]=false;
+
+                    tmp=tmp.substring(0,tmp.length()-1);
+                }
+            }
+        }
+    }
+}
+
+         */
