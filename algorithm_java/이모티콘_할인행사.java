@@ -31,7 +31,7 @@ class Solution {
             }
             public  static int[] solution(int[][] users, int[] emoticons){
                 int[] rate= {10,20,30,40};
-                int[] arr= new int[emoticons.length];
+                int[] arr= new int[emoㄱticons.length];
                 List<Service> serviceList= new ArrayList<>();
                 dfs(rate,emoticons,arr,users,serviceList,0);
 

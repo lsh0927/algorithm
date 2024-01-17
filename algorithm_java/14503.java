@@ -75,7 +75,7 @@ public class Main {
     {
         if(d==0) {
             if (arr[x][y + 1] == 0) {
-                y++;
+                y++             ;
 
                 return arr;
             }

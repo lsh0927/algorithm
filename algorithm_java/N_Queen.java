@@ -4,7 +4,7 @@ class Solution {
             static int [] board;
             static int answer = 0;
 
-            public int solution(int n) {
+            public int solution(int n) {e
                 board=new int[n];
 
                 backTracking(0,n);

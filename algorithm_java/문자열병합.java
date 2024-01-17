@@ -15,7 +15,7 @@ class Solution {
             
             if (i < length2) {
                 result.append(word2.charAt(i));
-            }
+            }           
         }
         
         return result.toString();
