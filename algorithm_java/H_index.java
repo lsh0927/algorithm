@@ -36,22 +36,24 @@
 //     }
 // }
 
-import java.util.*;
+import java.util.Arrays;
 
 class Solution {
     public int solution(int[] citations) {
-        Integer[] intArray = new Integer[citations.length];
-
-        for(int i = 0; i < citations.length; i++)
-            intArray[i] = citations[i];
-
-        Arrays.sort(intArray, Collections.reverseOrder());
-
-        for(int i = 0; i < intArray.length; i++) {
-            if(intArray[i] <= i+1)
-                return i;
+        int answer = 0;
+        Arrays.sort(citations);
+        //citations에는 인용횟수가 들어가 있음
+        //n편중, h번이상 인용된 논문이 h편이상이고 나머지 논문이 h번 이하로 인용
+        //-> h의 최댓값
+        // 0 1 3 5 6 => 3
+        // 0 1 2 3 4 5 6 7 => 3
+        // 1 2 3 4 5 6 7 => 4
+        
+        for(int i=0; i<citations.length; i++){
+            int smaller = Math.min(citations[i], citations.length-i);
+            answer = Math.max(answer, smaller);
         }
-
-        return intArray.length;
+        
+        return answer;
     }
 }
