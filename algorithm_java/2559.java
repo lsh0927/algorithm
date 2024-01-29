@@ -79,3 +79,42 @@ public class Main {
     }
 }
  */ //시간과 메모리 거의 5~6배 단축
+
+
+ /*
+  * import java.io.*;
+import java.util.*;
+
+class Main {
+    public static void main(String args[]) throws IOException {
+
+        BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st= new StringTokenizer(br.readLine());
+        int N= Integer.parseInt(st.nextToken());
+        int K= Integer.parseInt(st.nextToken());
+
+        int[] arr= new int[N];
+
+        st= new StringTokenizer(br.readLine());
+
+        for (int i=0;i<N;i++){
+            arr[i]=Integer.parseInt(st.nextToken());
+        }
+
+        List<Integer> list= new ArrayList<>();
+        int sum=0;
+        for (int a=0;a<=N-K;a++){
+            for (int b=a;b<a+K;b++){
+                sum+=arr[b];
+            }
+            list.add(sum);
+            sum=0;
+        }
+        //list의 맥스를 뽑아...!
+        int maxValue = Collections.max(list);
+
+
+        System.out.println(maxValue);
+    }
+}
+  */
