@@ -1,0 +1,84 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class 1082{
+
+    static class Number implements Comparable<Number>{
+        int num,price;
+
+        public Number(int num, int price) {
+            this.num = num;
+            this.price = price;
+        }
+
+        @Override
+        public int compareTo(Number o){
+            if (this.price==o.price) return this.num-o.num;
+            return this.price-o.price;
+        }
+
+    }
+
+    static int N,Pocket;
+    static int res[]= new int[100];
+    static Number arr[];
+    static Map<Integer,Integer> m= new HashMap<>(); // 숫자와 비용을 따로 저장
+
+
+    public static void main(String[] args)throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        N= Integer.parseInt(br.readLine());
+
+        arr= new Number[N];
+
+        StringTokenizer st= new StringTokenizer(br.readLine());
+        for (int i=0;i<N;i++){
+            int num= Integer.parseInt(st.nextToken());
+            arr[i]= new Number(i,num);
+            m.put(i,num);
+        }
+
+        Pocket= Integer.parseInt(br.readLine());
+        Arrays.sort(arr);
+        int cnt=0;
+
+        if (arr[0].num==0)// 숫자 0은 맨앞에 못옴
+        {
+            if(N==1 || arr[1].price>Pocket){
+                //못사는 경우
+                System.out.println(0);
+                return;
+            }
+            res[cnt++]=arr[1].num; // 그 다음 숫자 비용 감당 ㄱㄴ
+            Pocket-=arr[1].price;
+        }
+        while (Pocket-arr[0].price>=0){
+            res[cnt++]=arr[0].num;
+            Pocket-=arr[0].price;
+        }
+        //가장 비용이 적은 숫자로 다 채움
+
+        for (int i=0;i<cnt;i++){
+            for (int j=N-1;j>=0;j--){  //가장 큰 수부터
+                if (i==0 && j==0) continue; //맨앞자리에 0불가
+                int tmp= Pocket+m.get(res[i])-m.get(j);
+                if (tmp>=0){
+                    //가격 안넘고 현재 숫자로 바꿀수 있으면 바꿈
+                    Pocket=tmp;
+                    res[i]=j;
+                    break;
+                }
+            }
+        }
+        StringBuilder sb= new StringBuilder();
+//        for (int i=0;i<cnt;i++){
+//            sb.append(res[i]);
+//        }
+//        System.out.println(sb);
+        for (int i=0;i<cnt;i++)
+            System.out.print(res[i]);
+    }
+}
+
