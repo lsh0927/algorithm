@@ -1,0 +1,99 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class 13904{
+
+    static class Task implements Comparable<Task>{
+        int date,price;
+
+        public Task(int num, int price) {
+            this.date = num;
+            this.price = price;
+        }
+
+        @Override
+        public int compareTo(Task o){
+
+            return this.date-o.date;
+        }
+
+        /*
+          @Override
+        public int compareTo(Task o){
+
+            return o.price-this.price;
+        }
+         */
+    }
+
+    public static void main(String[] args)throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N=Integer.parseInt(br.readLine());
+
+        List<Task> list= new ArrayList<>();
+        PriorityQueue<Task> pq= new PriorityQueue<>();
+
+        StringTokenizer st;
+        for (int i=0;i<N;i++){
+            st= new StringTokenizer(br.readLine());
+                int n=Integer.parseInt(st.nextToken());
+                int p=Integer.parseInt(st.nextToken());
+                list.add(new Task(n,p));
+                pq.offer(new Task(n,p));
+
+        }
+
+        Collections.sort(list);
+
+
+        // 높은 점수 순대로, 가장 마감일에 가깝게 풀이
+
+//        int[] check= new int[1001];
+//
+//        for (Task task : list) {
+//            for (int i=task.date;i>0;i--){
+//                if (check[i]==0)
+//                {
+//                    check[i]= task.price;
+//                    break;
+//                }
+//            }
+//        }
+//        int total =0;
+//        for(int num : check) {
+//            total += num;
+//        }
+//        System.out.println(total);
+//
+//
+
+        //sort를 마감일 낮은 순 : 오름차순으로 했을떄
+
+        PriorityQueue<Integer> q = new PriorityQueue<>();
+        for (Task task : list) {
+            q.add(task.price);
+//            int a= q.peek();
+//            System.out.println(a);
+            if(q.size() > task.date) {
+                q.poll();
+            }
+        }
+		int total=0;
+		while(!q.isEmpty()) {
+			total+=q.poll();
+		}
+		System.out.println(total);
+
+
+
+
+        /*
+        정렬 없이도 푸는 방법: 마감일이 가장 긴 과제부터, 동일한 날에 할수 있는 과제 중 최대 점수 체크
+        O(N^2)이지만 충분히 돌아감
+
+         */
+    }
+}
+
