@@ -15,7 +15,7 @@ public class 21758 {
 
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int testSum=0;
+        Long testSum=0;
         for (int i = 0; i < N; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
             testSum+=arr[i];
@@ -23,7 +23,7 @@ public class 21758 {
 
         //특별한 경우
         if (N==3){
-            int max=0;
+            Long max=0;
             for (int i=0; i<3;i++){
                 if (max<=arr[i])
                     max=2*arr[i];
@@ -34,7 +34,7 @@ public class 21758 {
         {
             int flag=1;
 
-            int sum=0;
+            Long sum=0;
             sum+=arr[flag];
 
             //나머지 벌의 위치는 고정
@@ -45,7 +45,7 @@ public class 21758 {
         } else if (arr[N - 2] * 2 >= testSum) {
             int flag=N-2;
 
-            int sum=0;
+            Long sum=0;
             sum+=arr[flag];
 
             for (int i=0;i<=flag;i++){
@@ -57,8 +57,8 @@ public class 21758 {
 
         //일반적인 경우
         else if (arr[0] <= arr[N - 1]) {
-            int sum = 0;
-            int max = 0;
+            Long sum = 0;
+            Long max = 0;
             for (int bee2 = 1; bee2 < N - 1; bee2++) {
                 for (int i = 1; i < N; i++) {
                     if (i != bee2 && i < bee2) {
@@ -76,8 +76,8 @@ public class 21758 {
 
             System.out.println(max);
         } else {
-            int sum = 0;
-            int max = 0;
+            Long sum = 0;
+            Long max = 0;
             for (int bee2 = N - 2; bee2 > 0; bee2--) {
                 for (int i = N - 2; i >= 0; i--) {
                     if (i != bee2 && i > bee2) {
@@ -94,3 +94,93 @@ public class 21758 {
         }
     }
 }
+
+/*
+ import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StreamTokenizer;
+import java.util.StringTokenizer;
+
+
+public class Main {
+    static int n;					// n 개 장소
+    static int[] honeys;			// 각 장소의 꿀 양
+    static long maxCount;			// 출력: 최대 꿀 양
+
+    static long total;				// 모든 장소들의 꿀 양 합
+    static long[] toRightTotal;		// [0 ~ 벌 2 위치] 누적합
+    static long[] toLeftTotal;		// [끝 ~ 벌 2 위치] 누적합
+
+    //벌통: 맨 오른쪽 고정, 벌 1: 맨 왼쪽 고정 => 벌 2의 위치 선택 
+    static void case1() {
+        long bee1, bee2;			// 벌 1, 벌 2의 꿀 채집량
+
+        for (int i = 1; i <= n - 2; i++) {
+            bee1 = total - honeys[0] - honeys[i];
+            bee2 = total - toRightTotal[i];
+            maxCount = Math.max(maxCount, bee1 + bee2);
+        }
+    }
+
+    // 벌통: 맨 왼쪽 고정, 벌 1: 맨 오른쪽 고정 => 벌 2의 위치 선택 
+    static void case2() {
+        long bee1, bee2;
+
+        for (int i = n - 2; i >= 1; i--) {
+            bee1 = total - honeys[n - 1] - honeys[i];
+            bee2 = total - toLeftTotal[i];
+            maxCount = Math.max(maxCount, bee1 + bee2);
+        }
+    }
+
+    // 벌 1: 맨 왼쪽 고정, 벌 2: 맨 오른쪽 고정 => 벌통: 벌 사이에서 선택 
+    static void case3() {
+        long bee1, bee2;
+
+        for (int i = 1; i <= n - 2; i++) {
+            bee1 = toRightTotal[i] - honeys[0];
+            bee2 = toLeftTotal[i] - honeys[n - 1];
+            maxCount = Math.max(maxCount, bee1 + bee2);
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(
+                new InputStreamReader(System.in)
+        );
+        StringTokenizer st;
+
+        n = Integer.parseInt(br.readLine());
+        st = new StringTokenizer(br.readLine());
+        honeys = new int[n];
+        
+        
+        toRightTotal = new long[n];			// 왼쪽 -> 오른쪽으로 꿀 양 누적합
+        toLeftTotal = new long[n];			// 오른쪽 -> 왼쪽으로 꿀 양 누적합
+        
+        
+        long temp = 0;
+        for (int i = 0; i < n; i++) {
+            honeys[i] = Integer.parseInt(st.nextToken());
+
+            temp += honeys[i];
+            toRightTotal[i] = temp;
+        }
+
+        temp = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            temp += honeys[i];
+            toLeftTotal[i] = temp;
+        }
+
+        total = toRightTotal[n - 1];
+
+        case1();
+        case2();
+        case3();
+
+        System.out.println(maxCount);
+    }
+}        
+ */

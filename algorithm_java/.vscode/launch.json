@@ -1,0 +1,93 @@
+{
+    // IntelliSense를 사용하여 가능한 특성에 대해 알아보세요.
+    // 기존 특성에 대한 설명을 보려면 가리킵니다.
+    // 자세한 내용을 보려면 https://go.microsoft.com/fwlink/?linkid=830387을(를) 방문하세요.
+    "version": "0.2.0",
+    "configurations": [
+        
+
+        {
+            "type": "java",
+            "name": "1244",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "algorithm_java_13000089"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Caesar",
+            "request": "launch",
+            "mainClass": "Caesar",
+            "projectName": "algorithm_java_13000089"
+        },
+        {
+            "type": "java",
+            "name": "hw1",
+            "request": "launch",
+            "mainClass": "hw1",
+            "projectName": "algorithm_java_13000089"
+        },
+        {
+            "type": "java",
+            "name": "뿌요뿌요",
+            "request": "launch",
+            "mainClass": "뿌요뿌요",
+            "projectName": "algorithm_java_13000089"
+        },
+        {
+            "type": "java",
+            "name": "양",
+            "request": "launch",
+            "mainClass": "양",
+            "projectName": "algorithm_java_13000089"
+        },
+        {
+            "type": "java",
+            "name": "체스",
+            "request": "launch",
+            "mainClass": "체스",
+            "projectName": "algorithm_java_13000089"
+        },
+        {
+            "type": "java",
+            "name": "컨베이어벨트",
+            "request": "launch",
+            "mainClass": "컨베이어벨트",
+            "projectName": "algorithm_java_13000089"
+        },
+        {
+            "type": "java",
+            "name": "퇴사2",
+            "request": "launch",
+            "mainClass": "퇴사2",
+            "projectName": "algorithm_java_13000089"
+        },
+        {
+            "type": "java",
+            "name": "파이어볼",
+            "request": "launch",
+            "mainClass": "파이어볼",
+            "projectName": "algorithm_java_13000089"
+        },
+        {
+            "type": "java",
+            "name": "회의실배정",
+            "request": "launch",
+            "mainClass": "회의실배정",
+            "projectName": "algorithm_java_13000089"
+        },
+        {
+            "type": "java",
+            "name": "1244",
+            "request": "launch",
+            "mainClass": "1244",
+            "projectName": "algorithm_java_13000089"
+        }
+    ]
+}

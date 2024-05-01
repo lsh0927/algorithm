@@ -23,7 +23,7 @@ class Solution {
                         sb.append(N);
                     dp.get(i).add(Integer.parseInt(sb.toString()));
                     //숫자를 더하거나 빼는 연산을 적용하여 가능한 숫자들을 생성
-                    //dp 리스트를 이용하여 가능한 숫자들을 구합니다
+                    //dp 리스트를 이용하여 가능한 숫자
                     //dp[j]와 dp[i-j]에 저장된 숫자들을 이용하여 i에 해당하는 숫자를 만듦
                     // 연산 결과를 dp[i]에 추가
                     

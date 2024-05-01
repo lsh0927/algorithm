@@ -167,3 +167,92 @@ public class Main {
 }
 
  */
+
+ /*
+  * 원래 코드 수정
+  import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.*;
+
+public class Main {
+
+    static int R,C;
+    static char[][] map;
+    static boolean[][] visited;
+    static List<List<Character>> list;
+    static int[] dx={1,0,-1,0};
+    static int[] dy={0,1,0,-1};
+    static int lamb,wolf;
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st= new StringTokenizer(br.readLine());
+
+        R = Integer.parseInt(st.nextToken());
+        C = Integer.parseInt(st.nextToken());
+
+        map= new char[R][C];
+        visited= new boolean[R][C];
+        list= new ArrayList<>();
+
+
+
+        for (int i=0;i<R;i++){
+            String S= br.readLine();
+            for (int j=0;j<C;j++)
+            {
+                map[i][j]=S.charAt(j);
+            }
+        }
+
+        lamb=0;
+        wolf=0;
+        for (int i=0;i<R;i++){
+            for (int j=0;j<C;j++){
+                if (!visited[i][j]) {
+                    for (int k=0;k<3;k++){
+                        list.add(new ArrayList<>()); //0번은 울타리, 1번은 늑대, 2번은 양
+                    }
+                    dfs(i, j);
+                    if (list.get(1).size()<list.get(2).size())
+                    {
+                        lamb+=list.get(2).size();
+
+                    }
+                    else {
+                        wolf+=list.get(1).size();
+                    }
+                    list.clear();
+                }
+
+            }
+        }
+        System.out.println(lamb+" "+wolf);
+
+    }
+    static void dfs(int row, int col){
+        if (row < 0 || row >= R || col < 0 || col >= C || visited[row][col] || map[row][col] == '#') {
+            return;
+        }
+
+        visited[row][col] = true;
+
+        if (map[row][col] == '.') {
+            list.get(0).add('.');
+        } else if (map[row][col] == 'v') {
+            list.get(1).add('v');
+        } else if (map[row][col] == 'o') {
+            list.get(2).add('o');
+        }
+
+        for (int i = 0; i < 4; i++) {
+            int nr = row + dx[i];
+            int nc = col + dy[i];
+            dfs(nr, nc);
+        }
+    }
+
+}
+
+  */
