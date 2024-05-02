@@ -1,0 +1,68 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+public class Solution {
+
+
+    public static void main(String[] args) throws Exception{
+        BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st= new StringTokenizer(br.readLine());
+
+        int N= Integer.parseInt(st.nextToken());
+        int d=Integer.parseInt(st.nextToken());
+        int k=Integer.parseInt(st.nextToken());
+        int c=Integer.parseInt(st.nextToken());
+
+        int[]arr= new int[N+k];
+
+        for(int i=0;i<N;i++){
+            arr[i]=Integer.parseInt(br.readLine());
+        }
+
+        for(int i=N;i<N+k;i++){
+            arr[i]=arr[i-N];
+        }
+        //추가
+
+
+        int maxCnt=1; // 쿠폰을 쓰기전 최대 가짓수
+        Queue<Integer> q= new LinkedList<>();
+
+        //큐는 당장 연속하는 수를 넣기 위함이고, 최댓값 갱신이 되면 List<int[]>에 q.poll()한 값을 넣어야함
+        
+        //중복 값이 있는지 구할 Set...?
+        HashSet<Integer> hs= new HashSet<>();
+
+        for(int i=0;i<k;i++){
+            q.add(arr[i]);
+
+        }
+
+
+        for(int i=0;i<N;i++){
+            for(int j=i;j<i+k;j++){
+                int localCnt=0;
+                //큐로 중복 검사 직접하고 원소 제외하는 로직이 필요할듯? 매번 Set이나 list 쓰기엔 메모리 아까움
+                if (q.isEmpty() || !q.contains(arr[j])) {
+                    localCnt++;
+                    q.add(arr[j])
+                }
+                else{
+                    
+                }
+            }
+        }
+
+
+    }
+
+   
+}
+//이게 이렇게 복잡하게 접근해야 할 문제인가??? 실버 1인데?? 다른 방번 없나,,,,
