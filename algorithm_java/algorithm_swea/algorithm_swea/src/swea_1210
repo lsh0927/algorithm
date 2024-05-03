@@ -1,0 +1,80 @@
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+public class Solution {     
+
+    static boolean[][] visited;
+    static int ans=0;
+    public static void main(String[] args) throws Exception {
+        
+        BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+        int[][] arr;
+
+
+        // 내려가다가 갈수 있는 방향( 좌, 우가 1이면 )생기면 선호 변경
+        for(int i=0;i<10;i++){
+
+            int qwer= Integer.parseInt(br.readLine());
+
+            arr= new int[100][100];
+
+            int sx=0;
+            int sy=0;
+
+            //100개의 줄을 받아야함
+            for(int s=0;s<100;s++){
+                StringTokenizer st= new StringTokenizer(br.readLine());
+
+                for(int t=0;t<100;t++){
+                    arr[s][t]=Integer.parseInt(st.nextToken());
+                    if (arr[s][t]==2) {
+                        sx=t;
+                        sy=s;
+                    }
+                }
+            }
+
+            visited= new boolean[100][100];
+            go(sy-1,sx,arr);
+  
+                //여기서 출력
+
+                // 지정된 도착점(값이 2)인 지점으로 향하는, 출발점 X)
+                // 도착점부터 시작
+
+            System.out.println("#"+ qwer +" "+ans);
+        }
+    }
+    public static void go(int y, int x,int[][] arr){
+
+        visited[y][x]=true;
+
+        if (y==0) {
+            ans= x;
+            return;
+        }
+
+        //좌우로 갈 수 없다면 위로 이동
+
+        //1. 좌측 확인(범위 주의)
+        if(x-1>=0 && arr[y][x-1]==1 && !visited[y][x-1]){
+            x-=1;
+            go(y, x, arr);
+        }
+        else if(x+1<100 && arr[y][x+1]==1 && !visited[y][x+1]){
+            x+=1;
+            go(y, x, arr);
+        }
+        else{
+            go(y-1, x, arr);
+        }
+
+
+    }
+}
+
