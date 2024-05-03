@@ -1,0 +1,74 @@
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+
+public class Solution {     
+
+    static int N;
+    static int Min;
+    static int sum;
+    static int[] dx= {1,0,-1,0};
+    static int[] dy= {0,1,0,-1};
+
+    static int[][] arr;
+    static boolean[][] visited;
+    public static void main(String[] args) throws Exception {
+        
+        BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+        int T= Integer.parseInt(br.readLine());
+
+        for(int t=1;t<=T;t++){
+            sum=0;
+            N= Integer.parseInt(br.readLine());
+            Min=Integer.MAX_VALUE;
+
+            arr= new int[N][N];
+            visited= new boolean[N][N];
+
+            for(int i=0;i<N;i++){
+                String s= br.readLine();
+                for(int j=0;j<N;j++){
+                    arr[i][j]= s.charAt(j)-'0';
+                }
+
+            }
+
+            //또 최솟값?
+            visited[0][0]=true;
+            dfs(0,0,sum);
+
+
+            System.out.println("#" + t + " " + Min);
+        }
+     
+    }   
+    public static void dfs(int x, int y, int totalSum){
+
+        if (totalSum>=Min) {
+            return;
+        }
+
+        if (x==N-1 && y==N-1) {
+            Min=Math.min(totalSum+arr[N-1][N-1], Min);
+            return;
+        }
+
+       for(int i=0;i<4;i++){
+           int nx= dx[i]+x;
+           int ny= dy[i]+y;
+
+
+           if (nx>=0 && nx<N && ny>=0 && ny<N && !visited[nx][ny]) {
+
+              visited[nx][ny]=true;
+              dfs(nx, ny, totalSum+arr[nx][ny]);
+              visited[nx][ny]=false;
+           }
+       }
+
+    }
+
+}
+
