@@ -1,0 +1,93 @@
+// import java.io.BufferedReader;
+// import java.io.InputStreamReader;
+// import java.util.HashMap;
+// import java.util.Map;
+// import java.util.Scanner;
+// import java.util.StringTokenizer;
+
+// public class Solution {
+//     static String[] arr;
+//     static int max, chance;
+    
+// 	public static void main(String[] args) throws Exception {
+//        BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+
+//        int T= Integer.parseInt(br.readLine());
+
+
+
+
+//         for(int i=0;i<T;i++)
+//         {
+//             HashMap<Integer,Integer> map= new HashMap<>();
+
+//             int t= Integer.parseInt(br.readLine());
+
+//             StringTokenizer st= new StringTokenizer(br.readLine());
+
+//             while (st.hasMoreTokens()) {
+//                 int num=Integer.parseInt(st.nextToken());
+//                 map.put(num, map.getOrDefault(num,0)+1);
+//             }
+                
+      
+
+//         // 최빈값과 그 등장 횟수를 저장하는 변수
+//         int mode = 0;
+//         int maxFrequency = 0;
+
+//         // Map을 순회하면서 최빈값을 찾음
+//         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+//             int number = entry.getKey();
+//             int frequency = entry.getValue();
+
+//             // 최빈값과 동일한 등장 횟수를 가지고 있으면서 더 큰 숫자를 발견한 경우
+//             if (frequency == maxFrequency && number > mode) {
+//                 mode = number;
+//             }
+
+//             // 더 높은 등장 횟수를 가진 최빈값을 발견한 경우
+//             if (frequency > maxFrequency) {
+//                 mode = number;
+//                 maxFrequency = frequency;
+//             }
+//         }
+    
+//         System.out.println("#" + t+" "+ mode);
+//             }
+//     }
+    
+// }
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+public class Solution {
+    static int N;
+    static int[] cnt;
+     
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        N = Integer.parseInt(br.readLine());
+        StringTokenizer st;
+         
+        for ( int t = 1 ; t <= N ; t++ ) {
+            st = new StringTokenizer(br.readLine());
+            st = new StringTokenizer(br.readLine());
+            cnt = new int[101];
+            for ( int i = 0 ; i < 1000 ; i++ )
+                cnt[Integer.parseInt(st.nextToken())]++;
+             
+            int maxIdx = -1, ans = -1;
+            for ( int i = 0 ; i <= 100 ; i++ )
+                if ( cnt[i] >= maxIdx ) { maxIdx = cnt[i]; ans = i; }
+             
+            System.out.println("#"+t+" "+ans);
+        }
+    }
+}
+
