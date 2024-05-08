@@ -1,0 +1,80 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+
+public class Solution
+{
+    
+    static Set<Integer> set = new HashSet<>();
+    static int[][]arr;
+    static int ans=1;
+	public static void main(String args[]) throws Exception
+	{
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        	StringTokenizer st;
+		
+			int T= Integer.parseInt(br.readLine());
+
+		for(int test_case = 1; test_case <= T; test_case++)
+		{
+	
+            arr=new int[9][9];
+            ans=1;
+
+            for(int i=0;i<9;i++){
+                st= new StringTokenizer(br.readLine());
+                for(int j=0;j<9;j++){
+                	arr[i][j]= Integer.parseInt(st.nextToken());
+                }
+            }
+            
+            //가로줄 검사
+            for(int i=0;i<9;i++){
+                for(int j=0;j<9;j++){
+                	set.add(arr[i][j]); 
+                }
+                if(set.size()!=9){
+                    ans=0;
+                    break;
+                }
+                set.clear();
+            }
+            
+            set.clear();
+            
+            //세로줄 검사
+              for(int j=0;j<9;j++){
+                for(int i=0;i<9;i++){
+                	set.add(arr[i][j]);
+                }
+                if(set.size()!=9){
+                    ans=0;
+                    break;
+                }
+                set.clear();
+            }
+            
+            set.clear();
+            //정사각형 범위로 검사
+            for(int i=0;i<3;i++){
+            	for(int j=0;j<3;j++){
+                	for(int x=3*i;x<3*i+3;x++){
+                    	for(int y=3*j;y<3*j+3;y++){
+                        	set.add(arr[x][y]);
+                        }
+                    }
+                    if(set.size()!=9){
+                    	ans=0;
+                        break;
+                    }
+                }
+            }
+            
+            
+            System.out.println("#"+test_case+  " "+ ans); 
+            
+		
+		}
+	}
+}
