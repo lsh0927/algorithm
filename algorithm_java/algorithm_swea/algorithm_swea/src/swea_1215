@@ -1,0 +1,92 @@
+
+import java.util.*;
+import java.io.*;
+
+/*
+   사용하는 클래스명이 Solution 이어야 하므로, 가급적 Solution.java 를 사용할 것을 권장합니다.
+   이러한 상황에서도 동일하게 java Solution 명령으로 프로그램을 수행해볼 수 있습니다.
+ */
+class Solution
+{
+    static int ans=0;
+	public static void main(String args[]) throws Exception
+	{
+        BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+		
+        for(int test_case = 1; test_case <= 1; test_case++)
+		{
+            ans=0;
+            //two-pointer?
+            int N= Integer.parseInt(br.readLine());
+            char[][]arr= new char[8][8];
+            
+            for(int i=0;i<8;i++){
+                String s= br.readLine();
+                for(int j=0;j<8;j++){
+                    arr[i][j]= s.charAt(j);
+                }
+            }
+
+            int sidx=0;
+            int eidx=N-1;
+
+            //행으로 탐색
+            for(int i=0;i<8;i++){
+                sidx=0;
+                eidx=N-1; 
+                while (eidx<8) {
+                    //회문인지 검사
+                    if(checkRow(arr, i,sidx,eidx)){
+                        ans++;
+                   //     System.out.println("가로:" + i +" " + sidx + " " + eidx);
+
+                    }
+                    sidx++;
+                    eidx++;
+                } 
+            }
+           
+            //열으로 탐색
+            for(int i=0;i<8;i++){
+                sidx=0;
+                eidx=N-1; 
+                while (eidx<8) {
+                    //회문인지 검사
+                    if(checkCol(arr, i,sidx,eidx)){
+                        ans++;
+                 //       System.out.println("세로:" + i +" " + sidx + " " + eidx);
+                    }
+                    sidx++;
+                    eidx++;
+                }
+            }
+            System.out.println("#"+ test_case+" "+ ans);
+		}
+	}
+    public static boolean checkRow(char[][] arr, int num, int start, int end){
+        //투포인터를 잡고, 시작과 끝을 비교해서 끝까지 같아야 true 반환
+
+        while (start<end) {
+            if(arr[num][start]!=arr[num][end]){
+                return false;
+            }
+            start++;
+            end--;
+        }
+
+        return true;
+    }    
+    public static boolean checkCol(char[][] arr, int num, int start, int end){
+        //투포인터를 잡고, 시작과 끝을 비교해서 끝까지 같아야 true 반환
+
+        while (start<end) {
+            if(arr[start][num]!=arr[end][num]){
+                return false;
+            }
+            start++;
+            end--;
+        }
+
+        return true;
+    }    
+}
