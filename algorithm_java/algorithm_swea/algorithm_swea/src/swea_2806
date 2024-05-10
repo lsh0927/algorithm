@@ -1,38 +1,49 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
- 
-public class Solution {
- 
-    static int[] board;
-    static int answer;
-    public static void main(String args[]) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int T = Integer.parseInt(br.readLine());
-        for (int test_case = 1; test_case <= T; test_case++) {
-            int num= Integer.parseInt(br.readLine());
+import java.util.*;
+import java.io.*;
 
-            board= new int[num];
-            answer=0;
-            dfs(num,0);
-            System.out.println("#"+test_case+" "+answer);
-            
-        }
-    }
-    public static void dfs(int n, int curI){
-        boolean pos;
-        if (curI==n) {
-            answer++;
-            return;
-        }
-        for(int i=0;i<n;i++){
-            pos=true;
-            for(int j=0;j<curI;j++){
-                //curr, i <-> j,board[j]
-                if (board[j]==i || i==board[j] +(curI-j)|| i == board[j]-(curI - j)) {
-                    pos=false;
-                    break;
-                }
-            }
-        }
-    }
+public class Solution {
+
+	static int count;
+	static int[] result;
+	static int N;
+	public static void main(String[] args) {
+
+        BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+        int T= Integer.parseInt(br.readLine());
+
+		for(int tc=1;tc<=T; tc++) {
+            N= Integer.parseInt(br.readLine());
+
+			result = new int[N];
+			count = 0;			
+            dfs(0);
+			
+            System.out.println("#"+tc+" "+count);
+		}
+	}
+	
+	static void dfs(int idx) {
+		if (idx==N) {
+			count++;
+			return;
+		}
+		
+		for(int i=0; i<N; i++) {
+			result[idx]=i;
+			if(isOk(idx)){
+				dfs(idx+1);
+			}
+		}
+	}
+	
+	static boolean isOk(int idx) {
+		for(int i=0; i<idx; i++) { // 지금 테스트할 퀸, 이전 퀸들의 위치들 보면서 괜찮은지 판단(열 비교 + 양 대각) 
+			if (result[idx] == result[i] || Math.abs(idx-i) == Math.abs(result[idx]-result[i])) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+   
 }
