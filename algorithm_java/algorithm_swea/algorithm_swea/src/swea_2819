@@ -1,0 +1,57 @@
+import java.util.*;
+import java.io.*;
+
+public class Solution {
+
+    static Set<String> set= new HashSet<>();
+    static int[] dx={1,0,-1,0};
+    static int[] dy={0,1,0,-1};
+    static String[][] arr;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+        int T= Integer.parseInt(br.readLine());
+
+        for(int tc=1; tc<=T; tc++) {
+            set.clear();
+            arr= new String[4][4];
+
+            for(int i=0; i<4; i++){
+                StringTokenizer st= new StringTokenizer(br.readLine());
+                for(int j=0; j<4; j++){
+                    arr[i][j]= st.nextToken();
+                }
+            }
+
+            for(int i=0; i<4; i++){
+                for(int j=0; j<4; j++){
+                    //StringBuilder sb= new StringBuilder(arr[i][j]);
+                    String s= arr[i][j];
+                    dfs(i, j, s,0);
+                }
+            }
+
+            System.out.println("#" + tc + " " + set.size());
+        }
+    }
+
+    static void dfs(int i, int j, String s,int cnt){
+        if (cnt==6) {
+            set.add(s);
+            return;
+        }
+
+        for(int a=0; a<4; a++){
+            int ni=i+dx[a];
+            int nj=j+dy[a];
+
+            if (ni<4 && ni>=0 && nj>=0 && nj<4) {
+               
+                //dfs(ni, nj, sb.append(arr[ni][nj]),cnt+1);
+                dfs(ni, nj,  s+arr[ni][nj],cnt+1);
+
+      //          sb.deleteCharAt(sb.length() - 1);
+            }
+        }
+    }
+}
