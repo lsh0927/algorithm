@@ -1,95 +1,43 @@
-
-import java.util.*;
+import java.util.Scanner;
 
 public class Solution {
+    static String[] arr;
+    static int max, chance;
+    
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int tc = sc.nextInt();
-		
-		for(int t = 1; t <= tc; t++) {
-			String s = sc.next();
-			int n = sc.nextInt();
-			int[] a = new int[s.length()];
-			
-			for(int i = 0; i < s.length(); i++) {
-				a[i] = s.charAt(i) - '0';
-			}
-			//배열 값 저장 
-			
-			for(int i = 0; i < a.length; i++) {
-				ArrayList <Integer> l = new ArrayList();
+        Scanner sc = new Scanner(System.in);
+        int T = sc.nextInt();
+        for(int test_case = 1 ; test_case <= T ; test_case++) {
+            arr = sc.next().split("");
+            chance = sc.nextInt();
+            
+            max = 0;
+      
+            dfs(0, 0);
+            System.out.println("#" + test_case + " " + max);
+        }
+    }
+    static void dfs(int start, int cnt) {
+        if(cnt == chance) {
+            String result = "";
+            for(String s : arr)
+                result += s;
+            max = Math.max(max, Integer.parseInt(result));
+            return;
+        }
+        for(int i = start; i < arr.length; i++) {
+            for(int j = i + 1; j < arr.length; j++) {
+                // swap
+                String temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
 
-				//리스트 선언
-
-				int cnt = 0;
-				int max = a[i];
-				
-				
-				for(int j = i + 1; j < a.length; j++) {
-					if(a[i] < a[j]) {
-						max = Math.max(max, a[j]);
-					}
-				}
-				//배열에서 max값 찾기
-
-				for(int j = i + 1; j < a.length; j++) {
-					if(a[j] == max) {
-						l.add(j);
-					}
-				}
-				//리스트에 최댓값의 인덱스 추가
-
-
-				for(int j = i + 1; j < n; j++) {
-					if(j >= a.length)
-						break;
-					if(a[j] < a[i]) {
-						cnt++;
-					}
-				}
-
-				//인덱스가 교환 횟수가 될때까지 실행
-				//j가 배열 길이 이상이 될 시 컷
-				// 만약 a[j]가 a[i]보다 작다면 cnt++ ?? 먼소리야 도대체....
-
-				
-				
-
-				if(l.size() == 1) {
-					int tmp = a[i];
-					a[i] = a[l.get(0)];
-					a[l.get(0)] = tmp;
-					n--;
-				}
-				if(l.size() > 1) {
-					int tmp = a[i];
-					a[i] = a[l.get(l.size() - 1 - cnt)];
-					a[l.get(l.size() - 1 - cnt)] = tmp;
-					n--;
-				}
-				if(n < 1)
-					break;
-			}
-			if(n % 2 == 1) {
-				int flag = 0;
-				for(int i = 0; i < a.length; i++) {
-					for(int j = i + 1; j < a.length; j++) {
-						if(a[i] == a[j])
-							flag = 1;
-					}
-				}
-				if(flag == 0) {
-					int tmp = a[a.length - 1];
-					a[a.length -1] = a[a.length - 2];
-					a[a.length -2] = tmp;
-				}
-			}
-			
-			System.out.print("#" + t + " ");
-			for(int i = 0; i < a.length; i++) {
-				System.out.print(a[i]);
-			}
-			System.out.println();
-		}
-	}
+                dfs(i, cnt + 1);	// 깊이 +1
+                // 다시 swap 해서 되돌림
+                temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
 }
