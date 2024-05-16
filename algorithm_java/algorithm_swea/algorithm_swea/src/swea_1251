@@ -1,0 +1,189 @@
+import java.io.*;
+import java.util.*;
+ 
+public class Solution {
+
+    static class Node implements Comparable<Node>{
+        int to;
+        long cost;
+        public Node(int to, long cost){
+            this.to=to;
+            this.cost=cost;
+        }
+
+        @Override
+        public int compareTo(Node o){
+            return Long.compare(this.cost, o.cost);
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            StringTokenizer st;
+
+            int T = Integer.parseInt(br.readLine());
+            for (int tc = 1; tc <= T; tc++) {
+                int N = Integer.parseInt(br.readLine());
+                long[] X = new long[N];
+                long[] Y = new long[N];
+                boolean[] visit = new boolean[N];
+    
+                st = new StringTokenizer(br.readLine());
+                for (int i = 0; i < N; i++)
+                    X[i] = Long.parseLong(st.nextToken());
+                st = new StringTokenizer(br.readLine());
+                for (int i = 0; i < N; i++)
+                    Y[i] = Long.parseLong(st.nextToken());
+
+                double E = Double.parseDouble(br.readLine());
+    
+                List<Node>[] list= new ArrayList[N];
+
+                for(int i=0;i<N;i++){
+                    list[i]= new ArrayList<>();
+                    for(int j=0;j<N;j++){
+                        if (i==j) {
+                            continue;
+                        }
+                        long L= (X[i]-X[j])*(X[i]-X[j]) + (Y[i]-Y[j])*(Y[i]-Y[j]);
+                        list[i].add(new Node(j,L));
+                        // list[i]는 각 노드에서 갈 수 있는 노드들 정보 저장
+                    }
+                }
+
+                PriorityQueue<Node> pq= new PriorityQueue<>();
+                pq.add(new Node(0, 0));
+
+                long ans=0;
+                int cnt=0;
+
+                while (!pq.isEmpty()) {
+                    Node n= pq.poll();
+
+                    //이미 방문했다면
+                    if (visit[n.to]) { continue;}
+                    //방문 처리
+                    visit[n.to]=true;
+                    ans+=n.cost;
+                    cnt++;
+                    
+                    if (cnt==N) {
+                        break;
+                    }
+
+
+                    for(Node node: list[n.to]){
+                        if(!visit[node.to])
+                            pq.add(node);
+                    }
+                }
+            }
+        }
+}
+/*
+ * import java.util.Scanner;
+
+
+import java.io.FileInputStream;
+import java.io.*;
+import java.util.*;
+ 
+public class Solution {
+ 
+	
+	static class Edge implements Comparable<Edge>{
+		int from,to;
+		long cost;
+		
+		public Edge(int from, int to, long cost) {
+			// TODO Auto-generated constructor stub
+			this.from=from;
+			this.to=to;
+			this.cost=cost;
+		}
+		
+		@Override
+		public int compareTo(Edge o) {
+			//return (int) (this.cost-o.cost);
+			return Long.compare(this.cost, o.cost);
+
+		}
+	}
+	static int[] parents;
+	
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+       
+        int T=Integer.parseInt(br.readLine());
+        
+        for(int tc=1;tc<=T;tc++) {
+        	int N=Integer.parseInt(br.readLine());
+        	long[] X=new long[N];
+        	long[] Y=new long[N];
+        	
+        	st=new StringTokenizer(br.readLine());
+        	for(int i=0;i<N;i++) {
+        		X[i]=Long.parseLong(st.nextToken());
+        	}
+        	
+        	st=new StringTokenizer(br.readLine());
+        	for(int i=0;i<N;i++) {
+        		Y[i]=Long.parseLong(st.nextToken());
+        	}
+        	
+        	double E=Double.parseDouble(br.readLine());
+        	
+        	
+        	//유니온 파인드 설정
+        	parents=new int[N];
+        	for(int i=0;i<N;i++) parents[i]=i;
+        	
+        	
+        	PriorityQueue<Edge> pq=new PriorityQueue<>(); 
+        	for(int i=0;i<N;i++) {
+        		for(int j=i+1;j<N;j++) {
+        			long L= (X[i]-X[j])*(X[i]-X[j]) + (Y[i]-Y[j])*(Y[i]-Y[j]);
+        			//거리 계산후, pq에 하나씩 삽입
+        			pq.add(new Edge(i, j, L));
+        		}
+        	}
+        	
+        	long ans=0;
+        	int cnt=0;
+        	
+        	
+        	while(!pq.isEmpty()) {
+        		Edge e=pq.poll();
+        		if (union(e.from,e.to)) {
+					continue;
+				}
+        		ans+=e.cost;
+        		cnt++;
+	if(cnt==N-1) break;        		
+        	}
+        	System.out.println("#"+tc+" "+Math.round(ans*E));
+        }
+        
+        
+    }
+    static int find(int x) {
+    	if(parents[x]==x) return x;
+    	return parents[x]= find(parents[x]);
+    	
+    }
+    
+    
+    static boolean union(int a,int b) {
+    	int pa= find(a);
+    	int pb= find(b);
+    	
+    	if(pa!=pb) {
+    		parents[pb]=pa;
+    		return false;
+    		
+    	}
+    	return true;
+    }
+}
+ */
