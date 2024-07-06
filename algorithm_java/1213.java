@@ -1,41 +1,63 @@
 import java.io.*;
 import java.util.*;
- class Main {
+class Main {
+
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String line = br.readLine();
-        int[] alpha = new int[26];
-        for(int i=0; i<line.length(); i++) {
-            int idx = line.charAt(i)-'A';
-            alpha[idx]++;
+
+
+        String str= br.readLine();
+        char[] answer = new char[str.length()];
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        for(int i = 0; i < str.length(); i++) {
+            if(map.containsKey(str.charAt(i)))
+                map.put(str.charAt(i), map.get(str.charAt(i)) + 1);
+            else
+                map.put(str.charAt(i), 1);
         }
 
-        int isOne =0;
-        for(int i=0; i<alpha.length; i++) {
-            if(alpha[i]%2!=0) isOne++;
-        }
-
-        String answer ="";
-        StringBuilder sb = new StringBuilder();
-        if(isOne>1) answer += "I'm Sorry Hansoo";
-        else {
-            for(int i=0; i<alpha.length; i++) {
-                for(int r=0; r<alpha[i]/2; r++) {
-                    sb.append((char)(i+65));
+        boolean check = false;
+        for(int a : map.values()) {
+            if(a % 2 != 0) {
+                if(check) {
+                    System.out.println("I'm Sorry Hansoo");
+                    return;
                 }
+                check = true;
             }
-            answer += sb.toString();
-            String end = sb.reverse().toString();
-
-            sb = new StringBuilder();
-            for(int i=0; i<alpha.length; i++) {
-                if(alpha[i]%2==1) {
-                    sb.append((char)(i+65));
-                }
-            }
-            answer +=sb.toString()+end;
         }
-        System.out.println(answer);
+
+        char temp = 'a';
+        int sidx = 0, eidx = str.length()-1;
+
+        int idx = 0;
+        char[] arr = new char[map.size()];
+        for(Character c: map.keySet()) {
+            arr[idx++] = c;
+        }
+        Arrays.sort(arr);
+
+        for(char c: arr) {
+            //짝수개이면
+            if(map.get(c) % 2 == 0) {
+                for(int i = 0; i < map.get(c); i+=2) {
+                    answer[sidx++] = c;
+                    answer[eidx--] = c;
+                }
+            }else {
+                for(int i = 0; i < map.get(c) - 1; i+=2) {
+                    answer[sidx++] = c;
+                    answer[eidx--] = c;
+                }
+                temp = c;
+            }
+        }
+
+        if(temp != 'a')
+            answer[sidx] = temp;
+        for(char c : answer)
+            System.out.print(c);
     }
 
 }
