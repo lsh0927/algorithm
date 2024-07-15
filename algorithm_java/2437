@@ -26,6 +26,7 @@ public class Main{
             return;
         }
 
+        
         for (int i=1;i<N;i++){
             if (sum+1<arr[i])
                 break;
