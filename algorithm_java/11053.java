@@ -1,31 +1,62 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
-class Main {
+public class Main{
 
-
-    static int dp[][];
-    public static void main(String args[]) throws IOException {
-
+    static Integer[] dp;
+    static int[]arr;
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int t = Integer.parseInt(br.readLine());
 
-        int[] arr= new int[t];
+        int n= Integer.parseInt(br.readLine());
+
         StringTokenizer st= new StringTokenizer(br.readLine());
 
-        for (int i=0;i<t;i++){
-           arr[i]=Integer.parseInt(st.nextToken());
-        }
-       Arrays.sort(arr);
+        arr= new int[n+1];
+        dp= new Integer[n+1];
 
-        // 배열을 List<Integer>로 변환
-        List<Integer> list = new ArrayList<>();
-        for (int value : arr) {
-            list.add(value);
+        for (int i=1;i<=n;i++){
+            arr[i]=Integer.parseInt(st.nextToken());
         }
-        Set<Integer> set = new HashSet<>(list);
-        System.out.println(set.size());
+//
+//        for (int i=1;i<=n;i++){
+//            dp[i]=1;
+//        }
+
+        if (n==1){
+            System.out.println(1);
+            return;
+        }
+
+//        for (int i=2;i<=n;i++){
+//            for(int j=1;j<i;j++){
+//                if (arr[i]>arr[j]){
+//                    dp[i]=Math.max(dp[i], dp[j]+1 );
+//                }
+//            }
+//        }
+
+        for (int i=1; i<=n;i++){
+            recur(i);
+        }
+        int max=0;
+        for (int i=1; i<=n;i++){
+            max=Math.max(max,dp[i]);
+        }
+
+        System.out.println(max);
+           //System.out.println(max);
     }
-}
+    static int recur(int n){
 
-//dp를 사용하지 않고, 중복값 제거로 구한 정답. 이걸 구하는게 아닌가봄
+        if (dp[n]==null) {
+            dp[n]=1;
+            for (int i = n; i >= 1; i--) {
+                if (arr[n] > arr[i])
+                    dp[n] = Math.max(dp[n], recur(i) + 1);
+            }
+        }
+        return dp[n];
+    }
+
+}
