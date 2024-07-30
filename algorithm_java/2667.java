@@ -1,63 +1,68 @@
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
-public class Main {
-    private static int dx[] = {0,0,1,-1};
-    private static int dy[] = {1,-1,0,0};
-    private static int[] aparts = new int[25*25];
-    private static int n;
-    private static int apartNum = 0; //아파트 단지 번호의 수
-    private static boolean[][] visited = new boolean[25][25]; //방문여부
-    private static int[][] map = new int[25][25]; //지도
+public class Main{
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        n = sc.nextInt();
+    static HashMap<Integer,Integer> map= new HashMap<>();
+    static int n;
+    static int[][]arr;
+    static int[] dx={1,0,-1,0};
+    static int[] dy={0,1,0,-1};
+    static boolean[][] visited;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        map = new int[n][n];
-        visited = new boolean[n][n];
+        n= Integer.parseInt(br.readLine());
+        arr= new int[n][n];
+        visited= new boolean[n][n];
 
-        //전체 사각형 입력 받기
-        for(int i=0; i<n; i++){
-            String input = sc.next();
-            for(int j=0; j<n; j++){
-                map[i][j] = input.charAt(j)-'0';
+        for (int i=0;i<n;i++){
+            String s= br.readLine();
+            for (int j=0; j<n;j++){
+                arr[i][j]=Integer.parseInt(String.valueOf(s.charAt(j)));
             }
         }
 
-        for(int i=0; i<n; i++){
-            for(int j=0; j<n; j++){
-                if(map[i][j] == 1 && !visited[i][j]){
-                    apartNum++;
-                    dfs(i,j);
+        int num=1;
+        for (int i=0;i<n;i++){
+            for (int j=0; j<n;j++){
+
+                if(arr[i][j]==1 && !visited[i][j]) {
+                    map.put(num,1);
+                    dfs(i, j,num);
                 }
+                num+=1;
             }
         }
 
-        Arrays.sort(aparts);
-        System.out.println(apartNum);
+        List<Integer> list= new ArrayList<>();
+        for (int i : map.values()) {
+            list.add(i);
+        }
+        Collections.sort(list);
 
-        for(int i=0; i<aparts.length; i++){
-            if(aparts[i] == 0){
-            }else{
-                System.out.println(aparts[i]);
-            }
+        System.out.println(map.size());
+        for (int i : list) {
+            System.out.println(i);
+
         }
     }
+    static void dfs(int r, int c, int nn){
 
-    private static void dfs(int x, int y) {
-        visited[x][y] = true;
-        aparts[apartNum]++;
+        visited[r][c]=true;
 
-        for(int i=0; i<4; i++){
-            int nx = x + dx[i];
-            int ny = y + dy[i];
+        for (int i=0;i<4;i++){
+            int nx= r+dx[i];
+            int ny= c+dy[i];
 
-            if(nx >=0 && ny >=0 && nx < n && ny < n){
-                if(map[nx][ny] == 1 && !visited[nx][ny]){
-                    dfs(nx,ny);
-                }
+
+            if (nx>=0 && nx<n && ny>=0 && ny<n && arr[nx][ny]==1&& !visited[nx][ny]) {
+                visited[nx][ny]=true;
+                map.put(nn,map.get(nn)+1);
+                dfs(nx,ny,nn);
             }
         }
+
+
     }
 }
