@@ -1,0 +1,85 @@
+import java.util.*;
+import java.io.*;
+
+public class Main{
+
+
+    static int a;
+    static int b;
+    static boolean[][] visited;
+    static Set<Integer> ans= new TreeSet<>();
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st= new StringTokenizer(br.readLine());
+
+        a= Integer.parseInt(st.nextToken());
+        b= Integer.parseInt(st.nextToken());
+        int c= Integer.parseInt(st.nextToken());
+
+
+        if (c<a && c<b){
+            System.out.print(c);
+            return;
+        }
+        visited= new boolean[201][201];
+
+        dfs(0,0,c);
+
+        for (Integer num : ans) {
+            System.out.print(num+ " ");
+        }
+
+    }
+    static void dfs(int A, int B, int C){
+
+        if (visited[A][B]) return;
+
+
+        if (A==0){
+            ans.add(C);
+        }
+
+        visited[A][B]=true;
+        //0->1
+        if (A+B> b){
+            dfs((A+B)-b,b,C);
+        }else {
+            dfs(0, A+B ,C);
+        }
+
+
+        //0->2
+        dfs(0,B, A+C );
+
+
+        //1->2
+        dfs(A,0, B+C );
+
+
+
+        //1->0
+        if (A+B> a){
+            dfs(a,(A+B)-a,C);
+        }else {
+            dfs(A+B, 0,C);
+        }
+
+
+        //2->0
+        if (A+C> a){
+            dfs(a,B,A+C-a);
+        }else {
+            dfs(A+C, B ,0);
+        }
+
+
+        //2->1
+        if (B+C> b){
+            dfs(A,b,B+C-b);
+        }else {
+            dfs(A, B+C ,0);
+        }
+
+    }
+}
