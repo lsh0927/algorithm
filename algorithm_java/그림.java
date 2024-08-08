@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class Main {
+public class 그림 {
 
     static int[][] map;
     static List<Integer> list;

@@ -13,7 +13,6 @@ public class Main {
 			this.x=x;
 			this.y=y;
 		}
-		
 	}
 
 
@@ -44,7 +43,6 @@ public class Main {
 			st=new StringTokenizer(br.readLine());
 			for(int j=0;j<N;j++){
 				map[i][j]= Integer.parseInt(st.nextToken());
-
 				if (map[i][j]==0) {
 					emptySpace++;
 				}else if (map[i][j] == 2) {
@@ -96,6 +94,7 @@ public class Main {
 			int size= queue.size();
 
 			for(int i=0;i<size;i++){
+                
 				Node cur= queue.poll();
 
 				for(int k=0;k<4;k++){
@@ -112,12 +111,12 @@ public class Main {
 						queue.add(new Node(nx, ny));
 					}
 
-				
+                    
 					
 				}
 
 			}
-			//한번 큐에 있는 모든 바이러스의 확산이완료되면 시간 증가
+			//한번 큐에 있는 모든 바이러스의 확산이 완료되면 시간 + 1
 			time++;
 
 			if (time>=answer) {

@@ -1,0 +1,103 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+public class Solution {
+
+    static class Node {
+        int x;
+        int y;
+
+        public Node(int x,int y){
+            this.x=x;
+            this.y=y;
+        }
+
+
+    }
+
+    static int N;
+    static Node Home,Com;
+    static Node[] arr;
+
+    static boolean[] visited=new boolean[10];
+    static int Min;
+    static StringBuilder sb = new StringBuilder();
+
+
+    public static void main(String[] args) throws Exception {
+
+        BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+
+        int T= Integer.parseInt(br.readLine());
+
+        for(int t=0;t<T;t++){
+
+
+
+            Min= Integer.MAX_VALUE;
+
+
+            StringTokenizer st= new StringTokenizer(br.readLine());
+            N=Integer.parseInt(st.nextToken());
+            arr= new Node[N];
+
+            st=new StringTokenizer(br.readLine());
+
+            Com= new Node(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+            Home= new Node(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+
+
+            for(int i=0;i<N;i++){
+
+                arr[i]=new Node(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+
+            }
+
+
+            dfs(0,Com,0);
+            //배열, 거쳐간 노드 수, 현 좌표
+            sb.append("#"+ (t+1)+ " "+Min+"\n");
+        }
+        System.out.println(sb.toString());
+
+
+    }
+    public static void dfs(int cnt, Node now, int sum){
+
+        if (sum>=Min) {
+            return;
+        }
+
+        if (cnt==N) {
+            Min= Math.min(Min, sum+dist(now, Home));
+            return;
+        }
+
+        for (int i = 0; i < N; i++) {
+            if (!visited[i]) {
+                visited[i] = true;
+                dfs(cnt + 1, arr[i], sum + dist(now, arr[i]));
+                visited[i] = false;
+            }
+        }
+
+
+    }
+
+
+    public static int dist(Node a, Node b) {
+        return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
+    }
+
+
+
+}
+

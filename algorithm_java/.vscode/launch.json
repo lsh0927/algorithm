@@ -4,8 +4,13 @@
     // 자세한 내용을 보려면 https://go.microsoft.com/fwlink/?linkid=830387을(를) 방문하세요.
     "version": "0.2.0",
     "configurations": [
-        
-
+        {
+            "type": "java",
+            "name": "Solution",
+            "request": "launch",
+            "mainClass": "Solution",
+            "projectName": "algorithm_java_13000089"
+        },
         {
             "type": "java",
             "name": "1244",

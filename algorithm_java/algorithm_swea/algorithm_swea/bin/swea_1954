@@ -1,0 +1,163 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Solution {
+
+    static int[][]arr;
+    public static void main(String[] args) throws Exception {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int T = Integer.parseInt(br.readLine());
+
+        for(int i=0;i<T;i++){
+            int N= Integer.parseInt(br.readLine());
+
+            arr= new int[N][N];
+
+            int num= 2*N-1; //총 2N-1번 이동
+            int value=1; // 시작값
+            int x=0;
+            int y=0;
+
+            for(int t=0;t<num;t++){
+                if (t%4==0) {
+                    //우측으로 이동하면서, 지나가는 모든 칸에 차례로 숫자를 채움
+                    while (x<N && arr[y][x]==0) {
+                        arr[y][x]=value;
+                        value++;
+                        
+                        if (x+1==N || arr[y][x+1]!=0) {
+                            y++;
+                            break;
+                        }
+                        else{
+                            x++;
+                        }
+                    
+                    }
+                }else if (t%4==1) {
+                    //아래로 이동
+                    while (y<N && arr[y][x]==0) {
+                        arr[y][x]=value;
+                        value++;
+                        
+                        if (y+1==N || arr[y+1][x]!=0) {
+                            x--;
+                            break;
+                        }
+                        else{
+                            y++;
+                        }
+                    
+                    }
+                }else if(t%4==2){
+                    //왼쪽으로 이동
+                    while (x>=0 && arr[y][x]==0) {
+                        arr[y][x]=value;
+                        value++;
+                        
+                        if (x-1==-1 || arr[y][x-1]!=0) {
+                            y--;
+                            break;
+                        }
+                        else{
+                            x--;
+                        }
+                    
+                    }
+                }else{
+                    //위로 이동
+                    while (y>=0 && arr[y][x]==0) {
+                        arr[y][x]=value;
+                        value++;
+                        
+                        if (y-1==-1 || arr[y-1][x]!=0) {
+                            x++;
+                            break;
+                        }
+                        else{
+                            y--;
+                        }
+                    
+                    }
+                }
+
+               
+                
+            }
+
+            System.out.println("#"+ (i+1));
+            for(int a=0;a<N;a++){
+                for(int b=0;b<N;b++){
+                    System.out.print(arr[a][b]+ " ");
+                }
+               System.out.println("");
+            }
+        }
+    }
+}
+
+//정석 풀이?
+
+/*
+ * import java.io.*;
+ 
+class Solution
+{
+    private static int n;
+    private static int[][] arr;
+    private static int[] dx = {0, 1, 0, -1};
+    private static int[] dy = {1, 0, -1, 0};
+ 
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        int tc = Integer.parseInt(br.readLine());
+ 
+        for (int t = 1; t <= tc; t++) {
+            sb.append("#" + t + "\n");
+            n = Integer.parseInt(br.readLine());
+            arr = new int[n][n];
+            solution();
+ 
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    sb.append(arr[i][j] + " ");
+                }
+                sb.deleteCharAt(sb.length() - 1).append("\n");
+            }
+        }
+        System.out.print(sb.deleteCharAt(sb.length() - 1));
+        br.close();
+    }
+ 
+    private static void solution() {
+        arr[0][0] = 1;
+        int count = 2;
+        int x = 0;
+        int y = 0;
+        int direction = 0;
+ 
+        while (count <= n * n) {
+            int nextX = x + dx[direction];
+            int nextY = y + dy[direction];
+ 
+            if (nextX >= 0 && nextX < n && nextY >= 0 && nextY < n) {
+                if (arr[nextX][nextY] == 0) {
+                    arr[nextX][nextY] = count;
+                    count++;
+ 
+                    x = nextX;
+                    y = nextY;
+                } else {
+                    direction = (direction + 1) % 4;
+                }
+            } else {
+                direction = (direction + 1) % 4;
+            }
+        }
+    }
+}
+ */

@@ -1,0 +1,55 @@
+import java.io.*;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main {
+
+    static char[][] arr;
+    static int[] dx={1,0,-1,0};
+    static int[] dy={0,1,0,-1};
+    static int max,R,C;
+    static boolean[] visited;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        StringTokenizer st= new StringTokenizer(br.readLine());
+
+        R= Integer.parseInt(st.nextToken());
+        C= Integer.parseInt(st.nextToken());
+
+        arr= new char[R][C];
+        visited= new boolean[26];
+
+
+        for (int i=0;i<R;i++){
+            String input= br.readLine();
+            for (int j=0;j<C;j++){
+                arr[i][j]=input.charAt(j);
+            }
+        }
+
+        visited[arr[0][0]-'A']=true;
+        dfs(0,0,1);
+
+        System.out.println(max);
+
+    }
+    static void dfs(int r, int c, int cnt){
+
+        max= Math.max(max,cnt);
+
+
+        for (int i=0;i<4;i++){
+            int nr= r+ dx[i];
+            int nc= c+ dy[i];
+
+            if (0<= nr && nr <R && 0<=nc && nc<C && !visited[arr[nr][nc]-'A']){
+                visited[arr[nr][nc]-'A']=true;
+                dfs(nr,nc,cnt+1);
+                visited[arr[nr][nc]-'A']=false;
+
+            }
+        }
+
+    }
+}
