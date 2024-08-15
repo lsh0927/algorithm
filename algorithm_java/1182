@@ -33,7 +33,7 @@ public class Main {
         br.close();
     }
 
-    public static void dfs(int depth, int sum) {
+    public static vosid dfs(int depth, int sum) {
         if (depth == N) { // depth 가 마지막까지 갔을 경우
             if (sum == S) { // 그 중에 sum 이 타깃 넘버일 경우
                 result++;

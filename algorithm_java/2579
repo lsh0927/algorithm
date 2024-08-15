@@ -1,0 +1,42 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+
+public class Main {
+
+    static Integer[] dp;
+    static int[] arr;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+
+        arr = new int[N];
+        dp = new Integer[N];
+
+        for(int i = 0; i < N; i++) {
+            arr[i] = Integer.parseInt(br.readLine());
+        }
+
+        dp[0] = arr[0];  // 첫 번째 계단을 밟는 경우
+
+        if (N >= 2) {
+            dp[1] = arr[0] + arr[1];  // 첫 번째와 두 번째 계단을 밟는 경우
+            if (N >= 3) {
+                dp[2] = Math.max(arr[0] + arr[2], arr[1] + arr[2]);  // 두 번째와 세 번째 계단의 최적 경로
+            }
+        }
+
+
+
+        System.out.println(find(N - 1));
+    }
+
+    static int find(int N) {
+        // 아직 탐색하지 않은 N번째 계단일 경우
+        if (dp[N] == null) {
+            dp[N] = Math.max(find(N - 2), find(N - 3) + arr[N - 1]) + arr[N];
+        }
+        return dp[N];
+    }
+}
