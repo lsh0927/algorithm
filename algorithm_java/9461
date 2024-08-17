@@ -1,0 +1,44 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+
+public class Main {
+
+    static Long[] dp;
+    static long ans;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int Tc = Integer.parseInt(br.readLine());
+
+
+        for (int t = 0; t < Tc; t++) {
+
+            int N=Integer.parseInt(br.readLine());
+
+            dp = new Long[N];
+
+
+
+            if (N == 1 || N == 2) {
+                System.out.println(1);
+                continue;
+            }
+
+
+            dp[0] = 1L;
+            dp[1] = 1L;
+            dp[2] = 1L;
+
+            ans = recur(N - 1);
+
+
+            System.out.println(ans);
+        }
+    }
+    static long recur(int n){
+        if (dp[n]==null){
+            dp[n]=recur(n-2)+recur(n-3);
+        }
+        return dp[n];
+    }
+}
