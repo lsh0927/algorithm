@@ -1,0 +1,43 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+
+        String str = br.readLine();
+        int len = str.length();
+
+        int[] DP = new int[len + 1];
+        int div = 1000000;
+
+        DP[1] = DP[0] = 1;
+
+        if (str.charAt(0) == '0') {
+            DP[len] = 0;
+        }
+
+        else {
+            for (int i = 2; i <= len; i++) {
+                int preC = Character.getNumericValue(str.charAt(i - 2));
+                int curC = Character.getNumericValue(str.charAt(i - 1));
+
+                if (curC == 0) {
+                    if (preC == 1 || preC == 2) {
+                        DP[i] = DP[i - 2];
+                    }
+                } else {
+                    if (preC == 1 || (preC == 2 && curC <= 6)) {
+                        DP[i] = (DP[i - 1] + DP[i - 2]) % div;
+                    } else {
+                        DP[i] = DP[i - 1];
+                    }
+                }
+            }
+        }
+        System.out.println(String.valueOf(DP[len]));
+    }
+}
