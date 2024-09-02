@@ -1,0 +1,77 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+	static int n,s;
+	static long ans;
+	static ArrayList<Integer> leftList = new ArrayList<>();
+	static ArrayList<Integer> rightList = new ArrayList<>();
+	static int a[];
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		n = Integer.parseInt(st.nextToken());
+		s = Integer.parseInt(st.nextToken());
+	
+		a = new int[n];
+		st = new StringTokenizer(br.readLine());
+		for(int i=0; i<n; i++) {
+			a[i] = Integer.parseInt(st.nextToken());
+		}
+		makeSum(0,0,n/2,leftList); //왼쪽 모든 합 구하기
+		makeSum(0,n/2,n,rightList); //오른쪽 모든 합 구하기
+		
+		//오름차순 정렬
+		Collections.sort(leftList); 
+		Collections.sort(rightList);
+		
+		findAns();
+		
+		if(s == 0) ans-=1;
+		
+		System.out.println(ans);
+	}
+	
+	static void findAns() {
+		int pointL = 0;
+		int pointR = rightList.size()-1;
+		while(pointL < leftList.size() && pointR >= 0) {
+			int valL = leftList.get(pointL);
+			int valR = rightList.get(pointR);
+			
+			if(valL + valR == s) {
+				long cntL = 0;
+				long cntR = 0;
+				
+				//왼쪽리스트에서 같은 수 찾기
+				while(pointL < leftList.size() && valL == leftList.get(pointL)) {
+					cntL++;
+					pointL++;
+				}
+				//오른쪽리스트에서 같은 수 찾기
+				while(pointR >= 0 && valR == rightList.get(pointR)) {
+					cntR++;
+					pointR--;
+				}
+				ans += cntL*cntR;
+			}
+			if(valL + valR < s) { 
+				pointL++;
+			}
+			if(valL + valR > s) {
+				pointR--;
+			}				
+		}
+	}
+	
+	static void makeSum(int sum, int start, int end, ArrayList<Integer> list) {
+		if(start == end) {
+			list.add(sum);
+			return;
+		}
+		
+		makeSum(sum, start+1, end, list);
+		makeSum(sum+a[start], start+1, end, list);
+	}
+}
