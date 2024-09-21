@@ -1,0 +1,53 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+
+    public static void main(String args[]) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(br.readLine());
+
+        int[][] list= new int[N+1][3];
+        int[][] dp= new int[N+1][3];
+        int[] paint= new int[3];
+
+        StringTokenizer st;
+
+        for (int i=1;i<=N;i++){
+            st= new StringTokenizer(br.readLine());
+            for (int j=0;j<3;j++){
+                list[i][j]= Integer.parseInt(st.nextToken());
+            }
+        }
+
+        for (int i=0;i<3;i++) {
+            for (int j = 0; j < 3; j++) {
+                if (i == j) {
+                    dp[1][j] = list[1][j];
+                } else {
+                    dp[1][j] = 1001;
+                }
+            }
+
+            for (int k = 2; k < N + 1; k++) {
+                dp[k][0] = Math.min(dp[k - 1][1], dp[k - 1][2]) + list[k][0];
+                dp[k][1] = Math.min(dp[k - 1][0], dp[k - 1][2]) + list[k][1];
+                dp[k][2] = Math.min(dp[k - 1][1], dp[k - 1][0]) + list[k][2];
+
+                if (k == N) { //마지막 집은 첫집이랑 색깔이 달라야 함
+                    if (i == 0) //첫 집에 빨간색을 칠했을 경우 마지막은 초록아니면 파랑
+                        paint[i]=Math.min(dp[N][1],dp[N][2]);
+                    if (i==1)
+                        paint[i]=Math.min(dp[N][0],dp[N][2]);
+                    if (i==2)
+                        paint[i]=Math.min(dp[N][0],dp[N][1]);
+
+                }
+            }
+
+        }
+        System.out.print(Math.min(paint[0],Math.min(paint[1],paint[2])));
+
+    }
+}
