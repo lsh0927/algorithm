@@ -1,49 +1,38 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import java.util.StringTokenizer;
 
 public class Main {
 
     static Integer[] dp;
-    static int min;
+    static int N;
+
     public static void main(String[] args) throws IOException {
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        N= Integer.parseInt(st.nextToken());
 
         dp= new Integer[N+1];
-
-
-        for (int i=1;i<=Math.sqrt(N);i++){
-            dp[i*i]=1;
-        }
-
         dp[0]=0;
         dp[1]=1;
 
-        if (N>=2)
-            dp[2]=2;
-
-        min= recur(N);
+        recur(N);
 
 
-        System.out.println(min);
+
+        System.out.println(dp[N]);
     }
     static int recur(int n){
-
-
         if (dp[n]==null) {
+            dp[n] = n;
 
-            dp[n]=n;
-
-            for (int i=(int) Math.sqrt(n); i>=1;i--){
-                int pow = (int) Math.pow(i, 2);
-                dp[n]= Math.min(recur(n-pow)+1, dp[n]);
+            for (int i=1;i*i<=n;i++){
+                dp[n]=Math.min(dp[n],1+recur(n-i*i));
             }
-
-            //dp[n] = Math.min(recur((int) Math.sqrt(n)) + recur(n-(int) Math.sqrt(n)), dp[n]);
-
-
         }
-        return dp[n];
 
+        return dp[n];
     }
+}
