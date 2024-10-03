@@ -1,0 +1,77 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.*;
+
+public class Main {
+
+    static Integer[] dp;
+    static int[] arr;
+    static int[] degree;
+    static int N, K, X, Y;
+    static List<List<Integer>> graph;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int T = Integer.parseInt(br.readLine());
+
+        for (int tc = 0; tc < T; tc++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            N = Integer.parseInt(st.nextToken());
+            K = Integer.parseInt(st.nextToken());
+
+            arr = new int[N + 1];
+            dp = new Integer[N + 1];
+            degree = new int[N + 1];  // 진입 차수 저장
+            graph = new ArrayList<>();
+
+            for (int i = 0; i <= N; i++) {
+                graph.add(new ArrayList<>());
+            }
+
+            st = new StringTokenizer(br.readLine());
+            for (int i = 1; i <= N; i++) {
+                arr[i] = Integer.parseInt(st.nextToken());  // 각 건물을 짓는 시간
+            }
+
+            for (int i = 0; i < K; i++) {
+                st = new StringTokenizer(br.readLine());
+                X = Integer.parseInt(st.nextToken());
+                Y = Integer.parseInt(st.nextToken());
+                graph.get(X).add(Y);  // X -> Y로 향하는 그래프
+                degree[Y]++;  // Y 건물을 짓기 위해 필요한 건물 X가 있으므로 진입 차수 증가
+            }
+
+            int W = Integer.parseInt(br.readLine());
+            solve(W);
+        }
+    }
+
+    public static void solve(int target) {
+        Queue<Integer> queue = new ArrayDeque<>();
+        int[] result = new int[N + 1];
+
+        // 초기화: 제약이 없는 건물들은 바로 큐에 넣는다.
+        for (int i = 1; i <= N; i++) {
+            result[i] = arr[i];  // 각 건물 짓는 시간을 미리 기록
+            if (degree[i] == 0) {  // 진입 차수가 0인 건물들
+                queue.add(i);
+            }
+        }
+
+        // 위상정렬 수행
+        while (!queue.isEmpty()) {
+            int current = queue.poll();
+            for (Integer next : graph.get(current)) {
+                result[next] = Math.max(result[next], result[current] + arr[next]);  // 현재 건물을 지은 시간 반영
+                degree[next]--;  // 다음 건물의 진입 차수를 감소
+                if (degree[next] == 0) {  // 진입 차수가 0이 되면 큐에 추가
+                    queue.add(next);
+                }
+            }
+        }
+
+        System.out.println(result[target]);  // 목표 건물의 짓는 시간 출력
+    }
+}
