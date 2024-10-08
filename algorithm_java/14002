@@ -1,0 +1,68 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
+public class Main {
+
+    static Integer[] dp;
+    static int[] arr;
+    static int N;
+    static StringBuilder sb;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        N= Integer.parseInt(br.readLine());
+
+        dp= new Integer[N];
+        arr= new int[N];
+
+        StringTokenizer st= new StringTokenizer(br.readLine());
+        for (int i=0; i<N;i++){
+            arr[i]= Integer.parseInt(st.nextToken());
+        }
+
+
+        sb= new StringBuilder();
+
+        recur(N-1);
+        int ans=0;
+
+        for (int i=0;i<N;i++){
+            ans=Math.max(ans,dp[i]);
+        }
+        int value = ans;
+        Stack<Integer> stack = new Stack<>();
+
+        for(int i = N-1; i >= 0; i--){
+            if(value == dp[i]) {
+                stack.push(arr[i]);
+                value--;
+            }
+        }
+        while (!stack.isEmpty()){
+            sb.append(stack.pop() + " ");
+        }
+        System.out.println(ans);
+        System.out.println(sb.toString());
+    }
+    static int recur(int n){
+        if (dp[n]==null){
+            dp[n]=1;
+
+            for (int i=0;i<n;i++){
+                if (arr[n]>arr[i]){
+                    dp[n]=Math.max(dp[n],recur(i)+1);
+                }
+                else {
+                    recur(i);
+                }
+            }
+        }
+        return dp[n];
+    }
+}
